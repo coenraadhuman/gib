@@ -1,0 +1,12 @@
+logging:
+  level:
+    org.springframework: ERROR
+    io.github.coenraadhuman.gib: ERROR
+    io.github.coenraadhuman.gib.cli: INFO
+    io.github.coenraadhuman.gib.command: INFO
+  pattern:
+    console: "%green(%level) %msg%n"
+
+spring:
+  main:
+    banner-mode: "off"
