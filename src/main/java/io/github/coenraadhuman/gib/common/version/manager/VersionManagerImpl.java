@@ -33,12 +33,12 @@ public class VersionManagerImpl implements VersionManager {
     // Todo: recheck this, one thing noted is that version can't be less 0
 
     var commitVersion = commit.getDirtyVersion();
+
     commitVersion.setMajor(commitVersion.getMajor() >= 1 ? 1 : 0);
-    commitVersion.setMinor(commitVersion.getMinor() >= 1
-                                   && commitVersion.getMajor() <= 0 ? 1 : 0);
-    commitVersion.setPatch(commitVersion.getPatch() >= 1
-                                   && commitVersion.getMajor() <= 0
-                                   && commitVersion.getMinor() <= 0 ? 1 : 0);
+    commitVersion.setMinor(commitVersion.getMinor() >= 1 && commitVersion.getMajor() <= 0 ? 1 : 0);
+    commitVersion.setPatch(
+            commitVersion.getPatch() >= 1 && commitVersion.getMajor() <= 0 && commitVersion.getMinor() <= 0 ? 1 : 0
+    );
     return commitVersion;
   }
 

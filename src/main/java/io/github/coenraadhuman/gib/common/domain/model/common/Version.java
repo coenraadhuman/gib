@@ -27,8 +27,11 @@ public class Version {
   public void addVersion(TypeEnum typeEnum) {
     if (ReleaseEnum.MAJOR.equals(typeEnum.getRelease())) {
       this.major += 1;
+      this.minor = 0;
+      this.patch = 0;
     } else if (ReleaseEnum.MINOR.equals(typeEnum.getRelease())) {
       this.minor += 1;
+      this.patch = 0;
     } else if (ReleaseEnum.PATCH.equals(typeEnum.getRelease())) {
       this.patch += 1;
     }

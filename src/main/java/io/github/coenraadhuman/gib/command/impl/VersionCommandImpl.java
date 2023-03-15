@@ -1,12 +1,14 @@
 package io.github.coenraadhuman.gib.command.impl;
 
-import io.github.coenraadhuman.gib.command.Version;
+import io.github.coenraadhuman.gib.cli.argument.VersionArgument;
+import io.github.coenraadhuman.gib.command.common.Command;
 import io.github.coenraadhuman.gib.common.commit.engine.CommitEngine;
 import io.github.coenraadhuman.gib.common.commit.retrieval.CommitRetrieval;
 import io.github.coenraadhuman.gib.common.degenerator.Degenerator;
 import io.github.coenraadhuman.gib.common.domain.DomainFactory;
 import io.github.coenraadhuman.gib.common.domain.model.Commit;
 import io.github.coenraadhuman.gib.common.domain.model.DirtyCommit;
+import io.github.coenraadhuman.gib.common.domain.model.common.Version;
 import io.github.coenraadhuman.gib.common.version.manager.VersionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class VersionImpl implements Version {
+public class VersionCommandImpl implements Command<VersionArgument> {
 
   private final Degenerator degenerator;
   private final CommitEngine<Commit> commitEngine;
@@ -25,7 +27,12 @@ public class VersionImpl implements Version {
   private final CommitRetrieval commitRetrieval;
 
   @Override
-  public String calculate() {
+  public void execute(final VersionArgument argument) {
+    var projectVersion = calculate();
+    System.out.println(projectVersion.toString());
+  }
+
+  private Version calculate() {
     var projectData = DomainFactory.getProjectData();
     var dirtyCommits = new ArrayList<>(commitRetrieval.getCommits());
 
@@ -41,11 +48,7 @@ public class VersionImpl implements Version {
       }
     }
 
-    var projectVersion = versionManager.calculateProjectVersion(projectData);
-
-    log.debug("Project version: {}", projectVersion.toString());
-
-    return projectVersion.toString();
+    return versionManager.calculateProjectVersion(projectData);
   }
 
   private Commit createCommit(DirtyCommit dirtyCommit) {
@@ -58,5 +61,6 @@ public class VersionImpl implements Version {
                    .dirtyCommit(dirtyCommit)
                    .build();
   }
+
 
 }
