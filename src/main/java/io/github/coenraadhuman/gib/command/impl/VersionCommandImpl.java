@@ -5,7 +5,7 @@ import io.github.coenraadhuman.gib.command.common.Command;
 import io.github.coenraadhuman.gib.common.commit.engine.CommitEngine;
 import io.github.coenraadhuman.gib.domain.DomainFactory;
 import io.github.coenraadhuman.gib.domain.model.Commit;
-import io.github.coenraadhuman.gib.domain.model.common.Version;
+import io.github.coenraadhuman.gib.domain.model.ProjectData;
 import io.github.coenraadhuman.gib.git.GitHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,31 +23,37 @@ public class VersionCommandImpl implements Command<VersionArgument> {
 
   @Override
   public void execute(final VersionArgument argument) {
-    var projectVersion = calculate(argument);
-    System.out.println(projectVersion.toString());
+    var projectData = calculate(argument);
+    if (argument.getGitHookCommit() != null) {
+      addCommitToProjectData(projectData, git.buildGitHookCommit(argument.getGitHookCommit()));
+    }
+    System.out.println(projectData.getProjectVersion().toString());
   }
 
-  private Version calculate(final VersionArgument argument) {
+  private ProjectData calculate(final VersionArgument argument) {
     var projectData = DomainFactory.getProjectData();
     var repository = git.createRepository(argument.getPath());
     var commits = new ArrayList<>(git.getCurrentBranchCommits(repository));
 
     for (var commit : commits) {
-
-      var result = commitEngine.execute(commit);
-
-      if (result.isValid()) {
-        projectData.getCommits().add(commit);
-        projectData.setProjectVersion(null);
-        log.debug("Valid Commit: {}, Commit's dirty version: {}, Project version: {}",
-                commit.getDirtyCommit().getMessage(),
-                commit.getDirtyVersion().toString(),
-                projectData.getProjectVersion()
-        );
-      }
+      addCommitToProjectData(projectData, commit);
     }
 
-    return projectData.getProjectVersion();
+    return projectData;
+  }
+
+  private void addCommitToProjectData(final ProjectData projectData, final Commit commit) {
+    var result = commitEngine.execute(commit);
+
+    if (result.isValid()) {
+      projectData.getCommits().add(commit);
+      projectData.setProjectVersion(null);
+      log.debug("Valid Commit: {}, Commit's dirty version: {}, Project version: {}",
+              commit.getDirtyCommit().getMessage(),
+              commit.getDirtyVersion().toString(),
+              projectData.getProjectVersion()
+      );
+    }
   }
 
 }

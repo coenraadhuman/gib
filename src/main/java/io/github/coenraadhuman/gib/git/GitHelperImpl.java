@@ -60,6 +60,17 @@ public class GitHelperImpl implements GitHelper {
     return commits;
   }
 
+  @Override
+  public Commit buildGitHookCommit(String gitHookMessage) {
+    log.debug(gitHookMessage);
+    var dirtyCommit = DirtyCommit
+                              .builder()
+                              .message(gitHookMessage)
+                              // Todo: what does the footer look like?
+                              .build();
+    return buildCommit(dirtyCommit);
+  }
+
   private Commit buildCommit(final DirtyCommit dirtyCommit) {
     return Commit.builder()
                    .commitComponents(degenerator.degenerate(dirtyCommit))

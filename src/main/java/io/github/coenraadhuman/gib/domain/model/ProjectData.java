@@ -38,4 +38,9 @@ public class ProjectData {
     }
   }
 
+  @Override
+  public String toString() {
+    return projectVersion.toString();
+  }
+
 }

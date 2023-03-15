@@ -27,4 +27,9 @@ public class VersionArgument extends AbstractArgument {
    */
   private boolean patch;
 
+  /**
+   * Mechanism to provide the latest commit made to be included in project version calculation.
+   */
+  private String gitHookCommit;
+
 }

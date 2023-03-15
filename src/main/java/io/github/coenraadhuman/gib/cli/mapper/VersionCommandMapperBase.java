@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 )
 public abstract class VersionCommandMapperBase extends CommandMapperBase {
 
+  @Mapping(target = "gitHookCommit", expression = "java(findArgumentProvidedValue(arguments, \"--git-hook-commit\"))")
   @Mapping(target = "path", expression = "java(findArgumentAppender(arguments, \"--path\", \"/\", \".git\"))")
   @Mapping(target = "patch", expression = "java(findArgument(arguments, \"--path\", true, false))")
   @Mapping(target = "minor", expression = "java(findArgument(arguments, \"--minor\", true, false))")

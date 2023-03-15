@@ -5,11 +5,20 @@ public abstract class CommandMapperBase {
   protected String findArgumentAppender(
           final String[] arguments, final String wantedArgument, final String seperator, final String appendingValue
   ) {
-    var foundArgument = findArgument(arguments, wantedArgument);
-    if (foundArgument != null) {
-      return String.format("%s%s%s", foundArgument, seperator, appendingValue);
+    var foundValue = findArgumentProvidedValue(arguments, wantedArgument);
+    if (foundValue != null) {
+      return String.format("%s%s%s", foundValue, seperator, appendingValue);
     }
     return appendingValue;
+  }
+
+  protected String findArgumentProvidedValue(final String[] argument, final String wantedArgument) {
+    for (int i = 1; i < argument.length; i++) {
+      if (argument[i].equals(wantedArgument)) {
+        return argument[i + 1];
+      }
+    }
+    return null;
   }
 
   protected <T> T findArgument(

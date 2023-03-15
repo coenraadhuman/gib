@@ -11,6 +11,8 @@ public interface GitHelper {
 
   String currentWorkingBranch(Repository repository);
 
-  List<Commit> getCurrentBranchCommits(final Repository repository);
+  List<Commit> getCurrentBranchCommits(Repository repository);
+
+  Commit buildGitHookCommit(String gitHookMessage);
 
 }
