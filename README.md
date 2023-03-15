@@ -6,7 +6,7 @@ Gibberish git history analyser, a terminal utility that uses conventional commit
 
 This is a initial release of `gib`, see releases page for supported binaries.
 
-As it stand `gib` supports calculating your current git branch's [semantic version](https://semver.org/)
+As it stands `gib` supports calculating your current git branch's [semantic version](https://semver.org/)
 using all the [conventional commits](https://www.conventionalcommits.org/en/) on that branch:
 
 ```bash
