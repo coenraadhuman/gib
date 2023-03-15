@@ -3,7 +3,7 @@ package io.github.coenraadhuman.gib.common.commit.engine.framework.rule;
 import io.github.coenraadhuman.gib.common.commit.engine.framework.enums.RuleStatusEnum;
 import io.github.coenraadhuman.gib.common.commit.engine.framework.result.RuleResult;
 import io.github.coenraadhuman.gib.common.commit.engine.framework.rule.common.BasicRule;
-import io.github.coenraadhuman.gib.common.domain.model.Commit;
+import io.github.coenraadhuman.gib.domain.model.Commit;
 
 import java.util.Objects;
 

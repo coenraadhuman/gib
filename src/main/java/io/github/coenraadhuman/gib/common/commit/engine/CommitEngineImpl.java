@@ -8,7 +8,7 @@ import io.github.coenraadhuman.gib.common.commit.engine.factory.enums.VersionRul
 import io.github.coenraadhuman.gib.common.commit.engine.framework.engine.BasicEngine;
 import io.github.coenraadhuman.gib.common.commit.engine.framework.rule.PreStructuralValidationRule;
 import io.github.coenraadhuman.gib.common.commit.engine.framework.rule.common.BasicRule;
-import io.github.coenraadhuman.gib.common.domain.model.Commit;
+import io.github.coenraadhuman.gib.domain.model.Commit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

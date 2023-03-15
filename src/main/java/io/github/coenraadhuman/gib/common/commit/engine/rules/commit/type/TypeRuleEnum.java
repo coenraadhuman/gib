@@ -1,7 +1,7 @@
 package io.github.coenraadhuman.gib.common.commit.engine.rules.commit.type;
 
 import io.github.coenraadhuman.gib.common.commit.engine.rules.common.TypeEnum;
-import io.github.coenraadhuman.gib.common.domain.model.common.CommitComponents;
+import io.github.coenraadhuman.gib.domain.model.common.CommitComponents;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

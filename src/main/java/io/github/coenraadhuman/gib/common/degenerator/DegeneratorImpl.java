@@ -1,8 +1,8 @@
 package io.github.coenraadhuman.gib.common.degenerator;
 
-import io.github.coenraadhuman.gib.common.domain.model.DirtyCommit;
-import io.github.coenraadhuman.gib.common.domain.model.common.CommitComponents;
 import io.github.coenraadhuman.gib.common.utility.ValidConventionalCommitUtil;
+import io.github.coenraadhuman.gib.domain.model.DirtyCommit;
+import io.github.coenraadhuman.gib.domain.model.common.CommitComponents;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,6 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class DegeneratorImpl implements Degenerator {
-
-  // Todo: fix bug found where an exclamation mark causes the major version to be incremented twice.
 
   @Override
   public CommitComponents degenerate(DirtyCommit commit) {

@@ -3,7 +3,7 @@ package io.github.coenraadhuman.gib.common.commit.engine.factory.enums;
 import io.github.coenraadhuman.gib.common.commit.engine.framework.rule.ConventionalValidationRule;
 import io.github.coenraadhuman.gib.common.commit.engine.rules.commit.rules.convetional.OptionalConventionalRule;
 import io.github.coenraadhuman.gib.common.commit.engine.rules.commit.rules.convetional.TypeConventionalRule;
-import io.github.coenraadhuman.gib.common.domain.model.common.CommitComponents;
+import io.github.coenraadhuman.gib.domain.model.common.CommitComponents;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -4,7 +4,7 @@ import io.github.coenraadhuman.gib.common.commit.engine.framework.enums.RuleStat
 import io.github.coenraadhuman.gib.common.commit.engine.framework.result.RuleResult;
 import io.github.coenraadhuman.gib.common.commit.engine.framework.rule.VersionRule;
 import io.github.coenraadhuman.gib.common.commit.engine.rules.common.TypeEnum;
-import io.github.coenraadhuman.gib.common.domain.model.Commit;
+import io.github.coenraadhuman.gib.domain.model.Commit;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

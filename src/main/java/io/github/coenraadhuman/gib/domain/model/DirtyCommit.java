@@ -1,4 +1,4 @@
-package io.github.coenraadhuman.gib.common.domain.model;
+package io.github.coenraadhuman.gib.domain.model;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;

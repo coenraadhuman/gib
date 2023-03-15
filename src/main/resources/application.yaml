@@ -1,9 +1,9 @@
 logging:
   level:
     org.springframework: ERROR
-    io.github.coenraadhuman.gib: ERROR
-    io.github.coenraadhuman.gib.cli: INFO
-    io.github.coenraadhuman.gib.command: INFO
+    io.github.coenraadhuman.gib: DEBUG
+    io.github.coenraadhuman.gib.cli: DEBUG
+    io.github.coenraadhuman.gib.command: DEBUG
   pattern:
     console: "%green(%level) %msg%n"
 

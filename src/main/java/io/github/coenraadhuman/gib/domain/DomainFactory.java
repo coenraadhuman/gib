@@ -1,7 +1,7 @@
-package io.github.coenraadhuman.gib.common.domain;
+package io.github.coenraadhuman.gib.domain;
 
-import io.github.coenraadhuman.gib.common.domain.model.ProjectData;
-import io.github.coenraadhuman.gib.common.domain.model.common.Version;
+import io.github.coenraadhuman.gib.domain.model.ProjectData;
+import io.github.coenraadhuman.gib.domain.model.common.Version;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
