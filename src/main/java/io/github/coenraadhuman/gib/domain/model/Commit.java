@@ -27,7 +27,7 @@ public class Commit {
               dirtyVersion.getPatch() >= 1 && dirtyVersion.getMajor() <= 0 && dirtyVersion.getMinor() <= 0 ? 1 : 0
       );
     }
-    return dirtyVersion;
+    return normalisedVersion;
   }
 
 }
