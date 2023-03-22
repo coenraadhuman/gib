@@ -26,20 +26,25 @@ public class ProjectData {
   }
 
   private void addVersionToProject(Version commitVersion) {
-    if (commitVersion.getMajor() == 1) {
-      projectVersion.setMajor(projectVersion.getMajor() + commitVersion.getMajor());
-      projectVersion.setMinor(0);
-      projectVersion.setPatch(0);
-    } else if (commitVersion.getMinor() == 1) {
-      projectVersion.setMinor(projectVersion.getMinor() + commitVersion.getMinor());
-      projectVersion.setPatch(0);
-    } else if (commitVersion.getPatch() == 1) {
-      projectVersion.setPatch(projectVersion.getPatch() + commitVersion.getPatch());
+    if (commitVersion != null) {
+      if (commitVersion.getMajor() == 1) {
+        projectVersion.setMajor(projectVersion.getMajor() + commitVersion.getMajor());
+        projectVersion.setMinor(0);
+        projectVersion.setPatch(0);
+      } else if (commitVersion.getMinor() == 1) {
+        projectVersion.setMinor(projectVersion.getMinor() + commitVersion.getMinor());
+        projectVersion.setPatch(0);
+      } else if (commitVersion.getPatch() == 1) {
+        projectVersion.setPatch(projectVersion.getPatch() + commitVersion.getPatch());
+      }
     }
   }
 
   @Override
   public String toString() {
+    if (projectVersion == null) {
+      return null;
+    }
     return projectVersion.toString();
   }
 

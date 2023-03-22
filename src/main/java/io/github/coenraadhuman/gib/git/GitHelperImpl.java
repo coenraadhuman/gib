@@ -13,6 +13,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.FooterLine;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -30,7 +31,20 @@ public class GitHelperImpl implements GitHelper {
   @Override
   public Repository createRepository(String path) {
     try {
-      return new FileRepository(path);
+      if (path == null || StringUtils.containsWhitespace(path)) {
+        return new FileRepository(".git");
+      } else {
+        if (path.endsWith(".git")) {
+          return new FileRepository(path);
+        } else {
+          var isCorrectCharacter = path.charAt(path.length() - 1);
+          if ('/' == isCorrectCharacter) {
+            return new FileRepository(String.format("%s.git", path));
+          } else {
+            return new FileRepository(String.format("%s/.git", path));
+          }
+        }
+      }
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
