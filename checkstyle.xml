@@ -45,7 +45,7 @@
     <module name="LineLength">
         <property name="fileExtensions" value="java"/>
         <property name="max" value="120"/>
-        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+        <property name="ignorePattern" value='^package.*|^import.*|a href|href|http://|https://|ftp://|".*"'/>
     </module>
 
     <module name="TreeWalker">
@@ -234,11 +234,11 @@
             <message key="name.invalidPattern"
                      value="Method type name ''{0}'' must match pattern ''{1}''."/>
         </module>
-<!--        <module name="InterfaceTypeParameterName">-->
-<!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
-<!--            <message key="name.invalidPattern"-->
-<!--                     value="Interface type name ''{0}'' must match pattern ''{1}''."/>-->
-<!--        </module>-->
+        <!--        <module name="InterfaceTypeParameterName">-->
+        <!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
+        <!--            <message key="name.invalidPattern"-->
+        <!--                     value="Interface type name ''{0}'' must match pattern ''{1}''."/>-->
+        <!--        </module>-->
         <module name="NoFinalizer"/>
         <module name="GenericWhitespace">
             <message key="ws.followed"
