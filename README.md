@@ -4,10 +4,18 @@ Gibberish git history analyser, a terminal utility that uses conventional commit
 
 ### Getting Started
 
-This is a initial release of `gib`, see releases page for supported binaries.
+See [releases](https://github.com/coenraadhuman/gib/releases) for supported binaries.
 
-As it stands `gib` supports calculating your current git branch's [semantic version](https://semver.org/)
-using all the [conventional commits](https://www.conventionalcommits.org/en/) on that branch:
+__Supported commands:__
+
+```bash
+Gibberish git history analyser, a terminal utility that uses conventional commits to analyse your git history.
+
+Commands:
+  version                   Command to calculate the semantic version based on the conventional commits of the current branch.
+```
+
+__Version command options:__
 
 ```bash
 Actions for version
@@ -23,3 +31,12 @@ Options:
 ### Docker
 
 A docker image has been made for ease of use on pipelines such as Gitlab.
+
+- [Dockerhub](https://hub.docker.com/repository/docker/coenraadhuman/gib/general) - `docker pull coenraadhuman/gib:latest`
+- [Github Packages](https://github.com/coenraadhuman/gib/pkgs/container/gib) - `docker pull ghcr.io/coenraadhuman/gib:latest`
+
+### Further Reading
+
+- [Semantic Version](https://semver.org/)
+- [Conventional Commits](https://www.conventionalcommits.org/en/)
+- [Conventional Commit Types]()
