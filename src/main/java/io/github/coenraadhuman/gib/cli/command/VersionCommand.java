@@ -51,6 +51,7 @@ public final class VersionCommand implements CommandProcessor<VersionCommandArgu
     var repository = git.createRepository(argument.path());
     var commits = new ArrayList<>(git.getCurrentBranchCommits(repository));
 
+    log.debug(String.format("%-14s | %-15s | %s", "Commit Version", "Project Version", "Commit Message"));
     for (var commit : commits) {
       addCommitToProjectData(projectData, commit);
     }
@@ -64,10 +65,10 @@ public final class VersionCommand implements CommandProcessor<VersionCommandArgu
     if (result.isValid()) {
       projectData.getCommits().add(commit);
       projectData.setProjectVersion(null);
-      log.debug("Valid Commit: {}, Commit's dirty version: {}, Project version: {}",
-              commit.getDirtyCommit().getMessage(),
+      log.debug(String.format("%-14s | %-15s | %s",
               commit.getDirtyVersion().toString(),
-              projectData.getProjectVersion()
+              projectData.getProjectVersion(),
+              commit.getDirtyCommit().getMessage())
       );
     }
   }

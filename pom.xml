@@ -12,7 +12,7 @@
 
     <groupId>io.github.coenraadhuman</groupId>
     <artifactId>gib</artifactId>
-    <version>0.6.1</version>
+    <version>0.6.3</version>
     <name>gib</name>
     <description>
         Gibberish git history analyser, a terminal utility that uses conventional commits to analyse your git history.

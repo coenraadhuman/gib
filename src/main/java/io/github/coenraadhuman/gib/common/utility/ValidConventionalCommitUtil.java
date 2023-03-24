@@ -10,7 +10,7 @@ public class ValidConventionalCommitUtil {
 
   public static boolean isValid(final String message) {
     return Pattern.matches(
-            "^(build|chore|ci|docs|feat|feature|fix|perf|refactor|revert|style|test)?!?(\\([a-z ]+\\))?: .*",
+            "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\(.*\\))?(!)?: ([\\w ])+([\\s\\S]*)",
             message);
   }
 
