@@ -13,6 +13,9 @@ Gibberish git history analyser, a terminal utility that uses conventional commit
 
 Commands:
   version                   Command to calculate the semantic version based on the conventional commits of the current branch.
+
+Options:
+  -h,  --help               Prints help
 ```
 
 __Version command options:__
@@ -26,6 +29,7 @@ Options:
   -mi, --minor              Bump current project version with a minor increment.
   -p,  --patch              Bump current project version with a patch increment.
   -pa, --path               Specify the path of the git project.
+  -h,  --help               Prints help
 ```
 
 ### Docker
@@ -39,4 +43,4 @@ A docker image has been made for ease of use on pipelines such as Gitlab.
 
 - [Semantic Version](https://semver.org/)
 - [Conventional Commits](https://www.conventionalcommits.org/en/)
-- [Conventional Commit Types]()
+- [Conventional Commit Types](https://github.com/semantic-gitlog/semantic-gitlog/blob/master/docs/en-us/fundamentals/commit-types.md)
