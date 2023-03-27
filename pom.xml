@@ -12,7 +12,7 @@
 
     <groupId>io.github.coenraadhuman</groupId>
     <artifactId>gib</artifactId>
-    <version>0.6.3</version>
+    <version>0.6.4</version>
     <name>gib</name>
     <description>
         Gibberish git history analyser, a terminal utility that uses conventional commits to analyse your git history.
@@ -25,7 +25,7 @@
         <checkstyle.version>10.6.0</checkstyle.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <spring-context-indexer.version>6.0.6</spring-context-indexer.version>
-        <clap.version>0.3.1</clap.version>
+        <clap.version>0.4.0</clap.version>
     </properties>
 
     <dependencies>
