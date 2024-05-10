@@ -1,8 +1,16 @@
-FROM ghcr.io/graalvm/graalvm-ce:22.3.1 as builder
+FROM rust:1.78-alpine
+
 WORKDIR /build
-ADD ./ ./
-RUN ./mvnw -Pnative native:compile
 
-FROM ubuntu:jammy
+COPY . .
 
-COPY --from=builder /build/target/gib /usr/local/bin/gib
+RUN apk add --update --no-cache build-base pkgconf zlib-dev musl-dev libressl-dev
+
+ENV RUSTFLAGS='-C target-feature=-crt-static'
+
+RUN \
+    cargo install --path . && \
+    mv ./target/release/gib /usr/bin && \
+    rm -R /build
+
+CMD [ "gib" ]

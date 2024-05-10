@@ -9,27 +9,39 @@ See [releases](https://github.com/coenraadhuman/gib/releases) for supported bina
 __Supported commands:__
 
 ```bash
-Gibberish git history analyser, a terminal utility that uses conventional commits to analyse your git history.
+Gibberish git history analyser, a terminal utility that uses conventional commits to analyse your git history
+
+Usage: gib <COMMAND>
 
 Commands:
-  version                   Command to calculate the semantic version based on the conventional commits of the current branch.
+  version  Command to calculate the semantic version based on the conventional commits of the current branch
+  help     Print this message or the help of the given subcommand(s)
 
 Options:
-  -h,  --help               Prints help
+  -h, --help     Print help
+  -V, --version  Print version
 ```
 
 __Version command options:__
 
 ```bash
-Actions for version
+Command to calculate the semantic version based on the conventional commits of the current branch
+
+Usage: gib version [OPTIONS]
 
 Options:
-  -c,  --commit-git-hook    Mechanism to provide the latest commit made to be included in project version calculation.
-  -m,  --major              Bump current project version with a major increment.
-  -mi, --minor              Bump current project version with a minor increment.
-  -p,  --patch              Bump current project version with a patch increment.
-  -pa, --path               Specify the path of the git project.
-  -h,  --help               Prints help
+  -p, --path <PATH>
+          Specify the path of the git project
+      --major
+          Bump current project version with a major increment
+      --minor
+          Bump current project version with a minor increment
+      --patch
+          Bump current project version with a patch increment
+  -c, --commit-git-hook <COMMIT MESSAGE>
+          Mechanism to provide the latest commit made to be included in project version calculation
+  -h, --help
+          Print help
 ```
 
 ### Docker
