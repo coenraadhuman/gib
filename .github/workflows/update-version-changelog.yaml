@@ -1,0 +1,42 @@
+name: Update Version and Changelog
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_version_changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Calculate Version
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/coenraadhuman/gib:0.6.5
+          options: -v ${{ github.workspace }}:/app
+          run : |
+            sed -i '0, /version/s/version.*/version = "'$(gib version -pa /app)'"/' /app/Cargo.toml
+
+      - name: Generate Changelog
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/orhun/git-cliff/git-cliff
+          options: -v ${{ github.workspace }}:/app
+          run : |
+            git-cliff --output CHANGELOG.md
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "$(git log -1 --pretty=%an)"
+          git config --global user.email "$(git log -1 --pretty=%ae)"
+          git add ./Cargo.toml
+          git add ./CHANGELOG.md
+          git commit --amend --no-edit
+          git push -f
