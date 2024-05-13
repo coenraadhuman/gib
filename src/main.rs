@@ -7,7 +7,6 @@ use git2::{Commit, Repository};
 use version::Version;
 
 fn main() {
-
     let args = Args::parse();
 
     match args.command {

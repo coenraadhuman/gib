@@ -1,7 +1,5 @@
 use regex::Regex;
 
-
-
 pub struct Version {
 
     pub major: u8,
