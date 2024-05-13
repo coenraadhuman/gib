@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### ⚙️ Miscellaneous Tasks
+
+- [**breaking**] Licence and recognition of gib introducing breaking changes with move to rust
+
+## [0.10.1] - 2024-05-13
+
 ### 🚀 Features
 
 - Use rust instead of java
