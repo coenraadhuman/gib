@@ -31,7 +31,7 @@ Usage: gib version [OPTIONS]
 
 Options:
   -p, --path <PATH>
-          Specify the path of the git project
+          Specify the path of the git project, if not specified current directory will be used
       --major
           Bump current project version with a major increment
       --minor

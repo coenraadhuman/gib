@@ -5,6 +5,7 @@ use clap::Parser;
 use args::Args;
 use git2::{Commit, Repository};
 use version::Version;
+use std::env;
 
 fn main() {
     let args = Args::parse();
@@ -19,7 +20,15 @@ fn main() {
         } => {
             let found_path = match path {
                 Some(path) => path,
-                None => panic!("Repository path not provided"),
+                None => {
+                    match env::current_dir() {
+                        Ok(path) => match path.into_os_string().into_string() {
+                            Ok(auto_path) => auto_path,
+                            Err(_) => panic!("Couldn't determine current directory for repository"),
+                        },
+                        Err(_) => panic!("System can't find current directory"),
+                    }
+                },
             };
 
             let repo = match Repository::open(found_path) {

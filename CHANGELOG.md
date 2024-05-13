@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Use rust instead of java
 - Regex for ensuring string is valid before processing
 - Smaller docker image using debian slim
+- Auto use current directory when -p not supplied
 
 ### ⚙️ Miscellaneous Tasks
 

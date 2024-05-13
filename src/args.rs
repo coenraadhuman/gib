@@ -13,7 +13,7 @@ pub struct Args {
 pub enum Commands {
     /// Command to calculate the semantic version based on the conventional commits of the current branch
     Version {
-        /// Specify the path of the git project
+        /// Specify the path of the git project, if not specified current directory will be used
         #[arg(short, long)]
         path: Option<String>,
 
