@@ -46,10 +46,16 @@ Options:
 
 ### Docker
 
-A docker image has been made for ease of use on pipelines such as Gitlab.
+A docker image has been made for ease of use on pipelines such as Gitlab or Github, see this repository workflows for how you can incoporate gib on your pipeline.
 
 - [Dockerhub](https://hub.docker.com/repository/docker/coenraadhuman/gib/general) - `docker pull coenraadhuman/gib:latest`
 - [Github Packages](https://github.com/coenraadhuman/gib/pkgs/container/gib) - `docker pull ghcr.io/coenraadhuman/gib:latest`
+
+Example:
+```bash
+$ docker run ghcr.io/coenraadhuman/gib:0.10.1 version
+$ 0.10.1
+```
 
 ### Further Reading
 

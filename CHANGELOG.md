@@ -11,6 +11,10 @@ All notable changes to this project will be documented in this file.
 - Smaller docker image using debian slim
 - Auto use current directory when -p not supplied
 
+### 📚 Documentation
+
+- Docker
+
 ### ⚙️ Miscellaneous Tasks
 
 - Clean up macos nonsense
