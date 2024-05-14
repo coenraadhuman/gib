@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.0.2] - 2024-05-14
+
+### 🐛 Bug Fixes
+
+- Regular expression for filtering commits
 
 ### 🚜 Refactor
 
