@@ -21,7 +21,7 @@ impl Version {
 pub fn add_commit_to_version(major: u8, minor: u8, patch: u8, commit: &str) -> Version {
     let commit_string = commit.to_owned();
 
-    let conventional_commit_regex = Regex::new(r"^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z ]+\))?: [\w ]+").unwrap();
+    let conventional_commit_regex = Regex::new(r"^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w\.\-\p{Extended_Pictographic}]+\))?(!)?: ([\w \p{Extended_Pictographic}])+([\s\S]*)").unwrap();
 
     if conventional_commit_regex.is_match(commit) {
         if commit_string.contains("!") || commit_string.contains("BREAKING_CHANGE") {
