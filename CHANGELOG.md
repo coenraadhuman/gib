@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Regular expression for filtering commits
 
+### 🐛 Bug Fixes
+
+- Regular expression for filtering commits
+
 ### 🚜 Refactor
 
 - Rust modules
