@@ -4,7 +4,12 @@ Gibberish git history analyser, a terminal utility that uses conventional commit
 
 ### Getting Started
 
-See [releases](https://github.com/coenraadhuman/gib/releases) for supported binaries.
+See [releases](https://github.com/coenraadhuman/gib/releases) for supported binaries. Otherwise you can build it with [Rust](https://www.rust-lang.org/learn/get-started):
+
+```bash
+cargo build --release
+./target/release/gib version # This binary can be moved to your path
+```
 
 __Supported commands:__
 

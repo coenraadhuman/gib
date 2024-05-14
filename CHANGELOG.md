@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### 🚜 Refactor
+
+- Rust modules
+
+## [1.0.0] - 2024-05-13
+
 ### ⚙️ Miscellaneous Tasks
 
 - [**breaking**] Licence and recognition of gib introducing breaking changes with move to rust
