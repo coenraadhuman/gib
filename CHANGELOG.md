@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Build and test
+- Workflow updates
 
 ## [1.0.0] - 2024-05-13
 
