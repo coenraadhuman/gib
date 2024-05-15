@@ -2,19 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.2] - 2024-05-14
+## [unreleased]
 
 ### 🐛 Bug Fixes
 
 - Regular expression for filtering commits
-
-### 🐛 Bug Fixes
-
 - Regular expression for filtering commits
 
 ### 🚜 Refactor
 
 - Rust modules
+
+### 🧪 Testing
+
+- Commit regex and version calculation
+
+### ⚙️ Miscellaneous Tasks
+
+- Build and test
 
 ## [1.0.0] - 2024-05-13
 

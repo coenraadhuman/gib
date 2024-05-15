@@ -10,8 +10,7 @@ fn add_commit_to_version_test(expected_major: u8, expected_minor: u8, expected_p
 
 #[test]
 fn breaking_change() {
-    let commit = "
-        feat(foo): add a nice RegEx to check and parse a commit message that folows
+    let commit = "feat(foo): add a nice RegEx to check and parse a commit message that folows
 
         https://www.conventionalcommits.org/en/v1.0.0
 
