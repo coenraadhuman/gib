@@ -25,10 +25,33 @@ jobs:
       - name: Calculate Version
         uses: addnab/docker-run-action@v3
         with:
-          image: ghcr.io/coenraadhuman/gib:0.6.5
-          options: -v ${{ github.workspace }}:/app
+          image: ghcr.io/coenraadhuman/gib:1.0.2
+          shell: bash
+          options: --user 1001 -v ${{ github.workspace }}:/app
           run : |
-            sed -i '0, /version/s/version.*/version = "'$(gib version -pa /app)'"/' /app/Cargo.toml
+            echo "====================="
+            echo "Files mounted on /app"
+            echo "====================="
+            ls -la /app
+
+            echo "======="
+            echo "Run gib"
+            echo "======="
+            calculated_version=$(gib version -p /app)
+            echo "Calculated version: $calculated_version"
+
+            echo "============================="
+            echo "Replace version in Cargo.toml"
+            echo "============================="
+            # Todo: validation before replace.
+            #semantic_version_regex='(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?'
+
+            #if [[ "$calculated_version" =~ $semantic_version_regex ]]; then
+              sed -i '0, /version/s/version.*/version = "'$(echo $calculated_version)'"/' /app/Cargo.toml
+            #else
+            #  echo "Invalid version, can't update version in Cargo.toml"
+            #  exit 1
+            #fi
 
       - name: Generate Changelog
         uses: addnab/docker-run-action@v3

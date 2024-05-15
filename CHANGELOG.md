@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 - Build and test
 - Workflow updates
+- Use rust version of gib
 
 ## [1.0.0] - 2024-05-13
 
