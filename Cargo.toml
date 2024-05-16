@@ -9,3 +9,4 @@ edition = "2021"
 clap = { version = "4.5.4", features = ["derive"] }
 git2 = { version = "0.18.3" }
 regex = { version = "1.10.4" }
+openssl = { version = "0.10.64", features = ["vendored"] }

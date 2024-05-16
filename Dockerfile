@@ -6,8 +6,6 @@ RUN \
     apt install -y libssl-dev && \
     update-ca-certificates
 
-RUN which openssl
-
 WORKDIR /build
 
 COPY . .

@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - Build and test
 - Workflow updates
 - Use rust version of gib
+- Cross compile binaries job
 
 ## [1.0.0] - 2024-05-13
 
