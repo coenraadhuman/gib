@@ -33,8 +33,22 @@ pub enum Commands {
         #[arg(short, long, value_name = "COMMIT MESSAGE")]
         commit_git_hook: Option<String>,
 
-        /// Scope Regex filter; provide mechanism for calculating the version of a project withing a monorepo based of a regular expression
+        /// Scope regex filter; provide mechanism for calculating the version of a project within a monorepo based of a regular expression
         #[arg(short, long, value_name = "SCOPE_REGEX_FILTER")]
         scope_filter: Option<String>,
     },
+    /// Command to generate a changelog based on the conventional commmits and tags of the current branch
+    Changelog {
+        /// Specify the path of the git project, if not specified current directory will be used
+        #[arg(short, long)]
+        path: Option<String>,
+
+        /// Mechanism to provide the latest commit made to be included in changelog generation
+        #[arg(short, long, value_name = "COMMIT MESSAGE")]
+        commit_git_hook: Option<String>,
+
+        /// Scope regex filter; provide mechanism for generating a changelog for a specific project within a monorepo based of a regular expression
+        #[arg(short, long, value_name = "SCOPE_REGEX_FILTER")]
+        scope_filter: Option<String>,
+    }
 }

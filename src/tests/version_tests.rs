@@ -1,4 +1,4 @@
-use crate::version::{add_commit_to_version, Version};
+use crate::semantic::{add_commit_to_version, Version};
 
 #[allow(dead_code)]
 fn add_commit_to_version_test(expected_major: u8, expected_minor: u8, expected_patch: u8, commit_message: &str, scope_filter: Option<String>) {

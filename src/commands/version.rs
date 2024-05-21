@@ -1,7 +1,7 @@
 use git2::{Commit, Repository};
 use std::env;
-use crate::version;
-use crate::version::Version;
+use crate::semantic;
+use crate::semantic::Version;
 
 pub fn run(path: Option<String>, major:bool, minor: bool, patch: bool, commit_git_hook: Option<String>, scope_filter: Option<String>) {
     let found_path = match path {
@@ -43,7 +43,7 @@ pub fn run(path: Option<String>, major:bool, minor: bool, patch: bool, commit_gi
     for commit in commits.iter().rev() {
         match commit.message() {
             Some(message) => {
-                version = version::add_commit_to_version(version, message, scope_filter.clone())
+                version = semantic::add_commit_to_version(version, message, scope_filter.clone())
             },
             None => {},
         }
@@ -51,7 +51,7 @@ pub fn run(path: Option<String>, major:bool, minor: bool, patch: bool, commit_gi
 
     match commit_git_hook {
         Some(message) => {
-            version = version::add_commit_to_version(version, message.as_str(), scope_filter.clone())
+            version = semantic::add_commit_to_version(version, message.as_str(), scope_filter.clone())
         },
         None => {},
     }
