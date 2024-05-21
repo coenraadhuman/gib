@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### 🐛 Bug Fixes
+
+- Docker build, supported archs for base images
+
+## [1.2.1] - 2024-05-21
+
 ### 🚀 Features
 
 - Alpine docker image for extremely small image size
