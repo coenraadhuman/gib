@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Alpine docker image for extremely small image size
 
+### 📚 Documentation
+
+- Readme
+
 ## [1.0.4] - 2024-05-17
 
 ### 🐛 Bug Fixes

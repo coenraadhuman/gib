@@ -1,17 +1,29 @@
+![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103) [![GitHub license](https://img.shields.io/badge/licence-GPL--3.0-blue)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](.github/CONTRIBUTING.md)[![Image of github-profile-views-counter](https://github.com/coenraadhuman/github-profile-views-counter/blob/master/svg/613868422/badge.svg)](https://github.com/coenraadhuman/github-profile-views-counter/blob/master/readme/613868422/year.md)
+
 # gib
 
-Gibberish git history analyser, a terminal utility that uses conventional commits to analyse your git history.
+Gibberish git history analyser, a terminal utility that uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) to analyse your git history.
+
+### Goal
+
+The aim of the utility is to provide tools for pipelines to facilitate [semantic versioning](https://semver.org/) calculation, changelog generation for a project in an automated fashion using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ### Getting Started
 
-See [releases](https://github.com/coenraadhuman/gib/releases) for supported binaries. Otherwise you can build it with [Rust](https://www.rust-lang.org/learn/get-started):
+You have the following options to obtain the utility:
+
+- See [releases](https://github.com/coenraadhuman/gib/releases) for pre-built binaries that can be used for your own Dockerfile or directly on a machine.
+- Docker images are available at [Dockerhub](https://hub.docker.com/r/coenraadhuman/gib) and [Github Packages](https://github.com/coenraadhuman/gib/pkgs/container/gib) (these are optimised to be as small as possible).
+- Otherwise you can build it with [Rust](https://www.rust-lang.org/learn/get-started):
 
 ```bash
 cargo build --release
 ./target/release/gib version # This binary can be moved to your path
 ```
 
-__Supported commands:__
+### Features
+
+__Currently supported commands:__
 
 ```bash
 Gibberish git history analyser, a terminal utility that uses conventional commits to analyse your git history
@@ -51,14 +63,20 @@ Options:
 
 ### Docker
 
-A docker image has been made for ease of use on pipelines such as Gitlab or Github, see this repository workflows for how you can incoporate gib on your pipeline.
+Some notes regarding using `gib` with docker:
 
 - [Dockerhub](https://hub.docker.com/repository/docker/coenraadhuman/gib/general) - `docker pull coenraadhuman/gib:latest`
 - [Github Packages](https://github.com/coenraadhuman/gib/pkgs/container/gib) - `docker pull ghcr.io/coenraadhuman/gib:latest`
 
-Example:
+Run Example:
 ```bash
-$ docker run ghcr.io/coenraadhuman/gib:0.10.1 version
+$ docker run -v $PWD:/app ghcr.io/coenraadhuman/gib:latest version -p /app
+$ 0.10.1
+```
+
+User run example:
+```bash
+$ docker run --user $UID -v $PWD:/app ghcr.io/coenraadhuman/gib:latest version -p /app
 $ 0.10.1
 ```
 
