@@ -29,7 +29,7 @@ pub enum Commands {
         #[arg(long, default_value_t = false)]
         patch: bool,
 
-        /// Mechanism to provide the latest commit made to be included in project version calculation
+        /// Mechanism to provide the latest commit made to be included in project version calculation, this takes precedence when used inconjunction with either major, minor or patch flags
         #[arg(short, long, value_name = "COMMIT MESSAGE")]
         commit_git_hook: Option<String>,
 
