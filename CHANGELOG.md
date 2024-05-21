@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### 🚀 Features
+
+- Alpine docker image for extremely small image size
+
+## [1.0.4] - 2024-05-17
+
 ### 🐛 Bug Fixes
 
 - Regular expression for filtering commits

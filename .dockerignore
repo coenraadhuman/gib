@@ -1,0 +1,9 @@
+.github/
+.vscode/
+.editorconfig
+.gitattributes
+.gitignore
+CHANGELOG.md
+LICENSE
+README.md
+target/

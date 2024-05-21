@@ -1,27 +1,21 @@
-FROM rust:1.78-bookworm as builder
+FROM rust:1.78-alpine3.19 as builder
+
+ENV RUSTBACKTRACE 1
 
 RUN \
-    apt update && \
-    apt upgrade -y && \
-    apt install -y libssl-dev && \
-    update-ca-certificates
+    apk update && \
+    apk upgrade && \
+    apk add --no-cache perl musl-dev make
 
 WORKDIR /build
 
 COPY . .
 
 RUN \
-    cargo build  --target=$(uname -m)-unknown-linux-gnu --release && \
-    mv ./target/$(uname -m)-unknown-linux-gnu/release/gib /usr/bin
+    cargo build --target=$(uname -m)-unknown-linux-musl --release && \
+    mv "./target/$(uname -m)-unknown-linux-musl/release/gib" /usr/bin/gib
 
-FROM debian:bookworm-slim
-
-RUN \
-    apt update && \
-    apt upgrade -y && \
-    apt install -y libssl3 && \
-    apt clean && \
-    rm -rf /var/cache/apt/archives /var/lib/apt/lists
+FROM alpine:3.19
 
 COPY --from=builder /usr/bin/gib /usr/bin/gib
 
