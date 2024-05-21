@@ -31,8 +31,9 @@ Gibberish git history analyser, a terminal utility that uses conventional commit
 Usage: gib <COMMAND>
 
 Commands:
-  version  Command to calculate the semantic version based on the conventional commits of the current branch
-  help     Print this message or the help of the given subcommand(s)
+  version    Command to calculate the semantic version based on the conventional commits of the current branch
+  changelog  Command to generate a changelog markdown file based on the conventional commmits and tags of the current branch
+  help       Print this message or the help of the given subcommand(s)
 
 Options:
   -h, --help     Print help
@@ -59,6 +60,24 @@ Options:
           Mechanism to provide the latest commit made to be included in project version calculation
   -s, --scope-filter <SCOPE_REGEX_FILTER>
           Scope Regex filter; provide mechanism for calculating the version of a project withing a monorepo based of a regular expression
+  -h, --help
+          Print help
+```
+
+__Changelog command options:__
+
+```bash
+Command to generate a changelog markdown file based on the conventional commmits and tags of the current branch
+
+Usage: gib changelog [OPTIONS]
+
+Options:
+  -p, --path <PATH>
+          Specify the path of the git project, if not specified current directory will be used
+  -c, --commit-git-hook <COMMIT MESSAGE>
+          Mechanism to provide the latest commit made to be included in changelog generation
+  -s, --scope-filter <SCOPE_REGEX_FILTER>
+          Scope regex filter; provide mechanism for generating a changelog for a specific project within a monorepo based of a regular expression
   -h, --help
           Print help
 ```
