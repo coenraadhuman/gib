@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Multi arch build docker, tag filtering on jobs, new changelog for release
+- Better descriptor for scope filter in help menu
 
 ## [1.0.4] - 2024-05-17
 

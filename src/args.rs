@@ -34,7 +34,7 @@ pub enum Commands {
         commit_git_hook: Option<String>,
 
         /// Scope Regex filter; provide mechanism for calculating the version of a project withing a monorepo based of a regular expression
-        #[arg(short, long)]
+        #[arg(short, long, value_name = "SCOPE_REGEX_FILTER")]
         scope_filter: Option<String>,
     },
 }
