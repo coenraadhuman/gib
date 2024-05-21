@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 
 - Readme
 
+### ⚙️ Miscellaneous Tasks
+
+- Multi arch build docker, tag filtering on jobs, new changelog for release
+
 ## [1.0.4] - 2024-05-17
 
 ### 🐛 Bug Fixes

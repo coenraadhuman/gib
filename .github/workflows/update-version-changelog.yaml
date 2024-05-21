@@ -25,7 +25,7 @@ jobs:
       - name: Calculate Version
         uses: addnab/docker-run-action@v3
         with:
-          image: ghcr.io/coenraadhuman/gib:1.0.2
+          image: ghcr.io/coenraadhuman/gib:latest
           shell: bash
           options: --user 1001 -v ${{ github.workspace }}:/app
           run : |

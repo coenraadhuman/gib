@@ -3,7 +3,7 @@ name: Build and Create Draft Release
 on:
   push:
     tags:
-      - '*'
+      -  v[0-9]+.[0-9]+.[0-9]+*'
 
 env:
   CRATE_NAME: gib
@@ -216,6 +216,14 @@ jobs:
       - name: Generate SHA-256
         run: shasum -a 256 ${{ matrix.platform.name }}
         if: matrix.platform.os == 'macOS-latest'
+
+      - name: Generate Changelog
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/orhun/git-cliff/git-cliff
+          options: -v ${{ github.workspace }}:/app
+          run : |
+            git-cliff --output CHANGELOG.md
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2
