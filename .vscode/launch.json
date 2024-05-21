@@ -19,7 +19,7 @@
                     "kind": "bin"
                 }
             },
-            "args": ["version", "-p", "/Users/coenraadhuman/Development/personal/gib"],
+            "args": ["version", "-p", "/Users/coenraadhuman/Development/personal/gib", "--major"],
             "cwd": "${workspaceFolder}"
         },
         {

@@ -18,15 +18,22 @@ impl Version {
     }
 }
 
-fn version_calculator(version: Version, commit: &str) -> Version {
+pub enum Impact {
+    MAJOR,
+    MINOR,
+    PATCH,
+    NONE
+}
+
+fn commit_version_calculator(version: Version, commit: &str) -> Version {
     let commit_string = commit.to_owned();
 
     if commit_string.contains("!") || commit_string.contains("BREAKING_CHANGE") {
-        return Version::new(version.major + 1, 0, 0);
+        return add_impact_to_version(version, Impact::MAJOR);
     }
 
     if commit_string.contains("feat") {
-        return Version::new(version.major, version.minor + 1, 0);
+        return add_impact_to_version(version, Impact::MINOR);
     }
 
     if commit_string.contains("refactor")
@@ -37,10 +44,10 @@ fn version_calculator(version: Version, commit: &str) -> Version {
         || commit_string.contains("docs")
         || commit_string.contains("build")
     {
-        return Version::new(version.major, version.minor , version.patch + 1);
+        return add_impact_to_version(version, Impact::PATCH);
     }
 
-    return Version { major: version.major, minor: version.minor, patch: version.patch };
+    return add_impact_to_version(version, Impact::NONE);
 }
 
 pub fn add_commit_to_version(version: Version, commit: &str, scope_filter: Option<String>) -> Version {
@@ -57,17 +64,26 @@ pub fn add_commit_to_version(version: Version, commit: &str, scope_filter: Optio
                         let scope_value = &caps[2][1..&caps[2].len() -1];
 
                         if scope_filter_regex.is_match(scope_value) {
-                            return version_calculator(version, commit);
+                            return commit_version_calculator(version, commit);
                         }
                     },
                     Err(_) => panic!("Invalid regex supplied on scope filter"),
                 }
             },
             None => {
-                return version_calculator(version, commit);
+                return commit_version_calculator(version, commit);
             },
         }
     }
 
-    return Version { major: version.major, minor: version.minor, patch: version.patch };
+    return add_impact_to_version(version, Impact::NONE);
+}
+
+pub fn add_impact_to_version(version: Version, impact: Impact) -> Version {
+    match impact {
+        Impact::MAJOR => Version::new(version.major + 1, 0, 0),
+        Impact::MINOR => Version::new(version.major, version.minor + 1, 0),
+        Impact::PATCH => Version::new(version.major, version.minor , version.patch + 1),
+        Impact::NONE => Version::new(version.major, version.minor, version.patch),
+    }
 }
