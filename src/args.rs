@@ -32,5 +32,9 @@ pub enum Commands {
         /// Mechanism to provide the latest commit made to be included in project version calculation
         #[arg(short, long, value_name = "COMMIT MESSAGE")]
         commit_git_hook: Option<String>,
+
+        /// Scope Regex filter; provide mechanism for calculating the version of a project withing a monorepo based of a regular expression
+        #[arg(short, long)]
+        scope_filter: Option<String>,
     },
 }

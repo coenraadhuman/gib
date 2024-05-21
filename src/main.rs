@@ -10,8 +10,8 @@ fn main() {
     let args = Args::parse();
 
     match args.command {
-        args::Commands::Version {path, major, minor, patch, commit_git_hook } => {
-            commands::version::run(path, major, minor, patch, commit_git_hook);
+        args::Commands::Version { path, major, minor, patch, commit_git_hook, scope_filter } => {
+            commands::version::run(path, major, minor, patch, commit_git_hook, scope_filter);
         },
     }
 

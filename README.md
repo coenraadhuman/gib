@@ -57,9 +57,13 @@ Options:
           Bump current project version with a patch increment
   -c, --commit-git-hook <COMMIT MESSAGE>
           Mechanism to provide the latest commit made to be included in project version calculation
+  -s, --scope-filter <SCOPE_FILTER>
+          Scope Regex filter; provide mechanism for calculating the version of a project withing a monorepo based of a regular expression
   -h, --help
           Print help
 ```
+
+_Tool for testing regular expressions with a Rust flavor: [regex101](https://regex101.com/)_
 
 ### Docker
 

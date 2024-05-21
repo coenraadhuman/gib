@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - Alpine docker image for extremely small image size
+- Scope filter to support monorepos
 
 ### 📚 Documentation
 
