@@ -1,4 +1,4 @@
-use std::str::FromStr;
+use std::{fmt::Display, str::FromStr};
 
 use fancy_regex::Regex;
 use lazy_static::lazy_static;
@@ -12,7 +12,7 @@ pub struct ConventionalCommit {
     pub is_breaking: bool,
     pub is_deprecrated: bool,
     pub commit_body: Option<String>,
-    pub commit_footer: Option<String>
+    pub commit_footer: Option<String>,
 
 }
 
@@ -78,6 +78,26 @@ impl FromStr for Type {
     }
 
     type Err = ();
+}
+
+impl Display for Type {
+
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Type::FEATURE=> write!(f, "Feature"),
+            Type::REFACTOR=> write!(f, "Refactor"),
+            Type::PERFORMANCE=> write!(f, "Performance"),
+            Type::FIX=> write!(f, "Fix"),
+            Type::CHORE=> write!(f, "Chore"),
+            Type::REVERT=> write!(f, "Revert"),
+            Type::DOCS=> write!(f, "Documentation"),
+            Type::STYLE=> write!(f, "Styling"),
+            Type::TEST=> write!(f, "Testing"),
+            Type::BUILD=> write!(f, "Builds"),
+            Type::CI=> write!(f, "CI"),
+        }
+    }
+
 }
 
 pub fn scope_filter_check(scope_regex: Option<String>, scope_value: Option<String>) -> bool {
