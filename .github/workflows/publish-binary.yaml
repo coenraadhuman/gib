@@ -95,11 +95,23 @@ jobs:
             name: gib-Linux-powerpc64le.tar.gz
             skip_tests: true
 
-          - os_name: Linux-riscv64
-            os: ubuntu-22.04
-            target: riscv64gc-unknown-linux-gnu
-            bin: gib
-            name: gib-Linux-riscv64gc-gnu.tar.gz
+          # crypto/riscv64cpuid.s: Assembler messages:
+          #   crypto/riscv64cpuid.s:67: Error: Instruction csrr requires absolute expression
+          #   make[1]: *** [crypto/libcrypto-lib-riscv64cpuid.o] Error 1
+          #   make[1]: *** Waiting for unfinished jobs....
+          #   make: *** [build_libs] Error 2
+          #   thread 'main' panicked at /cargo/registry/src/index.crates.io-6f17d22bba15001f/openssl-src-300.3.0+3.3.0/src/lib.rs:621:9:
+
+
+
+          #   Error building OpenSSL:
+          #       Command: cd "/target/riscv64gc-unknown-linux-gnu/release/build/openssl-sys-8ed4114fd1d6f74b/out/openssl-build/build/src" && MAKEFLAGS="-j --jobserver-fds=8,9 --jobserver-auth=8,9" "make" "build_libs"
+          #       Exit status: exit status: 2
+          # - os_name: Linux-riscv64
+          #   os: ubuntu-22.04
+          #   target: riscv64gc-unknown-linux-gnu
+          #   bin: gib
+          #   name: gib-Linux-riscv64gc-gnu.tar.gz
 
           - os_name: Linux-s390x
             os: ubuntu-22.04

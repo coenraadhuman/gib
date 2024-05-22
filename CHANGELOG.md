@@ -4,16 +4,46 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
-### 🐛 Bug Fixes
+### ⚙️ Miscellaneous Tasks
 
-- Docker build, supported archs for base images
+- Remove riscv64 build temporarily
 
-## [1.2.1] - 2024-05-21
+## [1.5.0] - 2024-05-22
+
+### 🚀 Features
+
+- Initial changelog files
+- Conventional commit creation from regex groups
+- Simple changelog generation
+
+### 🚜 Refactor
+
+- Share logic between version and changelog commands
+- Single source of semantic version calculation
+
+### 📚 Documentation
+
+- Changelog addition to readme
+- Changelog
+
+### 🧪 Testing
+
+- Conventional commit creation testing
+
+### ⚙️ Miscellaneous Tasks
+
+- Fix shell being used on changelog job
+
+## [1.2.2] - 2024-05-21
 
 ### 🚀 Features
 
 - Alpine docker image for extremely small image size
 - Scope filter to support monorepos
+
+### 🐛 Bug Fixes
+
+- Docker build, supported archs for base images
 
 ### 📚 Documentation
 
