@@ -64,10 +64,14 @@ Options:
           Print help
 ```
 
+_Tool for testing scope regular expressions with `fancy-regex` crate: [Rustexp](https://rustexp.lpil.uk/)_
+
 __Changelog command options:__
 
+Intent of this command is to provide a simple changelog that will meet most needs, if you want more customisation have a look at [git-cliff](https://git-cliff.org/).
+
 ```bash
-Command to generate a changelog markdown file based on the conventional commmits and tags of the current branch
+Command to generate a simple changelog markdown file based on the conventional commmits and tags of the current branch
 
 Usage: gib changelog [OPTIONS]
 
