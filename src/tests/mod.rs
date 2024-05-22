@@ -1,1 +1,2 @@
-pub mod version_tests;
+pub mod conventional_tests;
+pub mod semantic_tests;

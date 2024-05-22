@@ -42,6 +42,7 @@ impl ConventionalCommit {
 
 }
 
+#[derive(Debug)]
 #[derive(PartialEq)]
 pub enum Type {
     FEATURE,
@@ -118,16 +119,16 @@ pub fn create_conventional_commit(commit: &str) -> Option<ConventionalCommit> {
                         let commit_type = captures.name("type")?.as_str();
                         let commit_scope = captures.name("scope");
                         let commit_breaking = captures.name("breaking");
-                        let commit_description = captures.name("description")?.as_str();
+                        let commit_description = captures.name("description")?.as_str().trim();
                         let commit_body = captures.name("body");
                         let commit_footer = captures.name("footers");
 
                         let is_breaking = match commit_breaking { 
                             Some(_) => true,
                             None => match commit_body {
-                                Some(value) => value.as_str().contains("BREAKING_CHANGE") || value.as_str().contains("BREAKING-CHANGE") || value.as_str().contains("BREADKING CHANGE"),
+                                Some(value) => value.as_str().contains("BREAKING_CHANGE") || value.as_str().contains("BREAKING-CHANGE") || value.as_str().contains("BREAKING CHANGE"),
                                 None => match commit_footer {
-                                    Some(value) => value.as_str().contains("BREAKING_CHANGE") || value.as_str().contains("BREAKING-CHANGE") || value.as_str().contains("BREADKING CHANGE"),
+                                    Some(value) => value.as_str().contains("BREAKING_CHANGE") || value.as_str().contains("BREAKING-CHANGE") || value.as_str().contains("BREAKING CHANGE"),
                                     None => false,
                                 },
                             }
@@ -162,11 +163,4 @@ pub fn create_conventional_commit(commit: &str) -> Option<ConventionalCommit> {
     }
 
     return Option::None;
-}
-
-#[test]
-fn feat_with_scope_and_filter() {
-    let _value = create_conventional_commit(r"feat(foo)!: add a nice RegEx to check and parse a commit message that folows https://www.conventionalcommits.org/en/v1.0.0");
-
-    println!("did it work?");
 }
