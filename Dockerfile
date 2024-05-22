@@ -17,6 +17,12 @@ RUN \
 
 FROM alpine:3.19
 
+RUN \
+    apk update && \
+    apk upgrade && \
+    apk add --no-cache bash sed && \
+    rm /var/cache/apk/*
+
 COPY --from=builder /usr/bin/gib /usr/bin/gib
 
 ENTRYPOINT [ "gib" ]
