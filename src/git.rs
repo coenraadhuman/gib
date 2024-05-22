@@ -4,7 +4,7 @@ use git2::Repository;
 
 pub struct Commit {
 
-    pub message: Option<String>
+    pub message: Option<String>,
 
 }
 

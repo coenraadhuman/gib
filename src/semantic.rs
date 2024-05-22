@@ -14,7 +14,11 @@ impl Version {
     }
 
     pub fn print(&self) {
-        println!("{}.{}.{}", self.major, self.minor, self.patch)
+        println!("{}", self.format())
+    }
+
+    pub fn format(&self) -> String {
+        format!("{}.{}.{}", self.major, self.minor, self.patch)
     }
 }
 
