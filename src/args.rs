@@ -37,7 +37,7 @@ pub enum Commands {
         #[arg(short, long, value_name = "SCOPE_REGEX_FILTER")]
         scope_filter: Option<String>,
     },
-    /// Command to generate a changelog markdown file based on the conventional commmits and tags of the current branch
+    /// Command to generate a simple changelog markdown file based on the conventional commmits and tags of the current branch
     Changelog {
         /// Specify the path of the git project, if not specified current directory will be used
         #[arg(short, long)]

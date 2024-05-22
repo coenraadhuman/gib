@@ -1,3 +1,4 @@
+use crate::conventional::create_conventional_commit;
 use crate::git::{retrieve_branch_commits, Commit};
 use crate::semantic::{add_commit_to_version, add_impact_to_version, Version, Impact};
 
@@ -15,7 +16,7 @@ pub fn run(path: Option<String>, major:bool, minor: bool, patch: bool, commit_gi
     for commit in commits.iter().rev() {
         match commit.message {
             Some(ref message) => {
-                version = add_commit_to_version(version, message, scope_filter.clone())
+                version = add_commit_to_version(version, create_conventional_commit(message), scope_filter.clone())
             },
             None => {},
         }
@@ -23,7 +24,7 @@ pub fn run(path: Option<String>, major:bool, minor: bool, patch: bool, commit_gi
 
     match commit_git_hook {
         Some(message) => {
-            version = add_commit_to_version(version, message.as_str(), scope_filter.clone())
+            version = add_commit_to_version(version, create_conventional_commit(message.as_str()), scope_filter.clone())
         },
         None => {},
     }

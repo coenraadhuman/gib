@@ -1,10 +1,10 @@
-use crate::semantic::{add_commit_to_version, Version};
+use crate::{conventional::create_conventional_commit, semantic::{add_commit_to_version, Version}};
 
 #[allow(dead_code)]
 fn add_commit_to_version_test(expected_major: u8, expected_minor: u8, expected_patch: u8, commit_message: &str, scope_filter: Option<String>) {
     let version = Version { major: 0, minor: 0 , patch: 0 };
 
-    let result = add_commit_to_version(version, commit_message, scope_filter);
+    let result = add_commit_to_version(version, create_conventional_commit(commit_message), scope_filter);
     assert_eq!(result.major, expected_major, "Major match");
     assert_eq!(result.minor, expected_minor, "Minor match");
     assert_eq!(result.patch, expected_patch, "Patch match");
