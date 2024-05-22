@@ -82,7 +82,7 @@ Options:
           Print help
 ```
 
-_Tool for testing regular expressions with a Rust flavor: [regex101](https://regex101.com/)_
+_Tool for testing scope regular expressions with `fancy-regex` crate: [Rustexp](https://rustexp.lpil.uk/)_
 
 ### Docker
 
