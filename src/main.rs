@@ -1,5 +1,6 @@
 mod args;
 mod commands;
+mod conventional;
 mod git;
 mod semantic;
 mod tests;
