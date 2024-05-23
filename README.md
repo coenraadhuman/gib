@@ -1,4 +1,7 @@
-![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103) [![GitHub license](https://img.shields.io/badge/licence-GPL--3.0-blue)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](.github/CONTRIBUTING.md)[![Image of github-profile-views-counter](https://github.com/coenraadhuman/github-profile-views-counter/blob/master/svg/613868422/badge.svg)](https://github.com/coenraadhuman/github-profile-views-counter/blob/master/readme/613868422/year.md)
+![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103) [![GitHub license](https://img.shields.io/badge/licence-GPL--3.0-blue)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](.github/CONTRIBUTING.md)[![Image of github-profile-views-counter](https://github.com/coenraadhuman/github-profile-views-counter/blob/master/svg/613868422/badge.svg)](https://github.com/coenraadhuman/github-profile-views-counter/blob/master/readme/613868422/year.md)![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/coenraadhuman/gib/total?label=Github%20Downloads)
+![Docker Pulls](https://img.shields.io/docker/pulls/coenraadhuman/gib?label=Docker%20Hub%20Pulls)
+
+
 
 # gib
 

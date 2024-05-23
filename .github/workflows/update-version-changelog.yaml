@@ -27,16 +27,16 @@ jobs:
         with:
           image: ghcr.io/coenraadhuman/gib:latest
           shell: bash
-          options: --user 1001 -v ${{ github.workspace }}:/app
+          options: --user 1001:127 -v ${{ github.workspace }}:/app
           run : |
             echo "====================="
             echo "Files mounted on /app"
             echo "====================="
             ls -la /app
 
-            echo "======="
-            echo "Run gib"
-            echo "======="
+            echo "========================="
+            echo "Calculate Project Version"
+            echo "========================="
             calculated_version=$(gib version -p /app)
             echo "Calculated version: $calculated_version"
 
@@ -53,13 +53,10 @@ jobs:
             #  exit 1
             #fi
 
-      - name: Generate Changelog
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ghcr.io/orhun/git-cliff/git-cliff
-          options: -v ${{ github.workspace }}:/app
-          run : |
-            git-cliff --output CHANGELOG.md
+            echo "=================="
+            echo "Generate Changelog"
+            echo "=================="
+            gib changelog -p /app > CHANGELOG.md
 
       - name: Commit Changes
         run: |
