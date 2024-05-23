@@ -22,12 +22,12 @@ RUN \
     apk upgrade && \
     apk add --no-cache bash sed shadow setpriv && \
     rm /var/cache/apk/* && \
-    # Preferred on pipelines:
+    # Preferred shell on pipelines:
     chsh -s $(which bash) && \
-    # Required so we can ensure that gib and bash runs with correct Linux privilege for the mounted repository:
+    # Required so we can ensure that gib and bash runs with correct Linux privilege as the mounted repository:
     chmod +s $(which setpriv)
 
-# Avoid Git security issues since end user is explicity mounting repository:
+# Avoid Git security since end user is explicity mounting repository:
 RUN \
     echo '[safe]' > /etc/gitconfig && \
     echo '    directory = *' /etc/gitconfig
@@ -36,7 +36,7 @@ COPY --from=builder /usr/bin/gib /usr/bin/gib
 COPY --from=builder /build/.docker/gib-entrypoint.sh /usr/bin/gib-entrypoint.sh
 COPY --from=builder /build/.docker/bash-entrypoint.sh /usr/bin/bash-entrypoint.sh
 
-# Run bash with the same Linux privilege for the mounted repository:
+# Run bash with the same Linux privilege as the mounted repository:
 RUN cd /bin && mv bash real-bash && ln -s /usr/bin/bash-entrypoint.sh bash
 
 WORKDIR /app

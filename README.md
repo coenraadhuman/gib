@@ -98,6 +98,8 @@ Some notes regarding using `gib` with docker:
 - [Dockerhub](https://hub.docker.com/repository/docker/coenraadhuman/gib/general) - `docker pull coenraadhuman/gib:latest`
 - [Github Packages](https://github.com/coenraadhuman/gib/pkgs/container/gib) - `docker pull ghcr.io/coenraadhuman/gib:latest`
 
+By default the work directory is set to `/app` this can be changed with the `-w` option on `docker run`. It is important to update this when mounting to a different directory since the entry point for the container relies on the working directory to ensure bash and gib runs with the correct Linux permissions.
+
 Run Example:
 ```bash
 # The default work directory is /app
