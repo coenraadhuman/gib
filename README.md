@@ -100,7 +100,8 @@ Some notes regarding using `gib` with docker:
 
 Run Example:
 ```bash
-$ docker run -v $PWD:/app ghcr.io/coenraadhuman/gib:latest version -p /app
+# The default work directory is /app
+$ docker run -v $PWD:/app ghcr.io/coenraadhuman/gib:latest version
 $ 0.10.1
 ```
 

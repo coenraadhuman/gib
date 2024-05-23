@@ -27,7 +27,7 @@ jobs:
         with:
           image: ghcr.io/coenraadhuman/gib:latest
           shell: bash
-          options: --user 1001:127 -v ${{ github.workspace }}:/app
+          options: -v ${{ github.workspace }}:/app
           run : |
             echo "====================="
             echo "Files mounted on /app"
