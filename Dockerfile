@@ -34,10 +34,6 @@ RUN \
 
 COPY --from=builder /usr/bin/gib /usr/bin/gib
 COPY --from=builder /build/.docker/gib-entrypoint.sh /usr/bin/gib-entrypoint.sh
-COPY --from=builder /build/.docker/bash-entrypoint.sh /usr/bin/bash-entrypoint.sh
-
-# Run bash with the same Linux privilege as the mounted repository:
-RUN cd /bin && mv bash real-bash && ln -s /usr/bin/bash-entrypoint.sh bash
 
 WORKDIR /app
 
