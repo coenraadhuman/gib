@@ -1,6 +1,7 @@
 name: Update Version and Changelog
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -26,7 +27,7 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: ghcr.io/coenraadhuman/gib:latest
-          shell: bash
+          shell: /bin/bash
           options: -v ${{ github.workspace }}:/app
           run : |
             echo "====================="

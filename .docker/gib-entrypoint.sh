@@ -1,4 +1,4 @@
-#!/bin/real-bash
+#!/usr/bin/env bash
 
 # Some pipelines insist on running the entrypoint as root inside the container
 # even though when a non-privileged runs it on their own files. The below checks
