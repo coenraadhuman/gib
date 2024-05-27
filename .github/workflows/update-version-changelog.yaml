@@ -38,7 +38,7 @@ jobs:
             echo "========================="
             echo "Calculate Project Version"
             echo "========================="
-            calculated_version=$(gib version -p /app)
+            calculated_version=$(gib-entrypoint.sh version -p /app)
             echo "Calculated version: $calculated_version"
 
             echo "============================="
@@ -57,7 +57,7 @@ jobs:
             echo "=================="
             echo "Generate Changelog"
             echo "=================="
-            gib changelog -p /app > CHANGELOG.md
+            gib-entrypoint.sh changelog -p /app > CHANGELOG.md
 
       - name: Commit Changes
         run: |
