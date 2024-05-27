@@ -22,12 +22,14 @@ pub fn run(path: Option<String>, _commit_git_hook: Option<String>, scope_filter:
                     Some(conventional_commit) => {
 
                         simple_changelog.insert_str(0,
-                            &format!("|{}|{}|{}.|{}|{}|\n",
+                            &format!("|{}|{}|{}.|{}|{}|{}|{}|\n",
                                 version.format(),
                                 conventional_commit.commit_type,
                                 conventional_commit.commit_description.to_sentence_case(),
                                 if conventional_commit.is_breaking { 'X' } else { ' ' },
                                 if conventional_commit.is_deprecrated { 'X' } else { ' ' },
+                                commit.author.to_string(),
+                                commit.committer.to_string()
                             ).as_str()
                         );
 
@@ -39,9 +41,9 @@ pub fn run(path: Option<String>, _commit_git_hook: Option<String>, scope_filter:
         }
     }
 
-    simple_changelog.insert_str(0, "|---|---|---|---|---|\n");
+    simple_changelog.insert_str(0, "|---|---|---|---|---|---|---|\n");
 
-    simple_changelog.insert_str(0, "|Version|Commit Type|Description|Breaking Change|Deprecation|\n");
+    simple_changelog.insert_str(0, "|Version|Commit Type|Description|Breaking Change|Deprecation|Author|Committer|\n");
 
     simple_changelog.insert_str(0, &format!("## {}\n\n", version.format()));
 

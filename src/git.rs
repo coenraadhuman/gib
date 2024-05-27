@@ -2,9 +2,61 @@ use std::env;
 
 use git2::Repository;
 
+pub struct Author {
+
+    pub name: Option<String>,
+    pub email: Option<String>
+
+}
+
+impl Author {
+
+    pub fn to_string(&self) -> String {
+        let name = match self.name {
+            Some(ref value) => value,
+            None => "Not Available",
+        };
+
+        let email = match self.name {
+            Some(ref value) => value,
+            None => "not available",
+        };
+
+        format!("{} <{}>", name, email)
+    }
+
+}
+
+pub struct Committer {
+
+    pub name: Option<String>,
+    pub email: Option<String>
+
+}
+
+impl Committer {
+
+    pub fn to_string(&self) -> String {
+        let name = match self.name {
+            Some(ref value) => value,
+            None => "Not Available",
+        };
+
+        let email = match self.name {
+            Some(ref value) => value,
+            None => "not available",
+        };
+
+        format!("{} <{}>", name, email)
+    }
+
+}
+
 pub struct Commit {
 
     pub message: Option<String>,
+    pub author: Author,
+    pub committer: Committer
 
 }
 
@@ -51,7 +103,29 @@ pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
                             None => Option::None,
                         };
 
-                        Commit { message }
+                        let author = Author {
+                            name: match commit.author().name() {
+                                Some(value) => Some(value.to_string()),
+                                None => None,
+                            },
+                            email: match commit.author().email() {
+                                Some(value) => Some(value.to_string()),
+                                None => None,
+                            },
+                        };
+
+                        let committer = Committer {
+                            name: match commit.committer().name() {
+                                Some(value) => Some(value.to_string()),
+                                None => None,
+                            },
+                            email: match commit.committer().email() {
+                                Some(value) => Some(value.to_string()),
+                                None => None,
+                            },
+                        };
+
+                        Commit { message, author, committer }
                     },
                     Err(_) => panic!("Could not retrieve oid of commit"),
                 }
