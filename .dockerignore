@@ -5,6 +5,5 @@ target/
 .gitattributes
 .gitignore
 Cargo.lock
-CHANGELOG.md
 LICENSE
-README.md
+*.md

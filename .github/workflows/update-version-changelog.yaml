@@ -38,7 +38,7 @@ jobs:
             echo "========================="
             echo "Calculate Project Version"
             echo "========================="
-            calculated_version=$(gib-entrypoint.sh version -p /app)
+            calculated_version=$(gib version -p /app)
             echo "Calculated version: $calculated_version"
 
             echo "============================="
@@ -49,6 +49,7 @@ jobs:
 
             #if [[ "$calculated_version" =~ $semantic_version_regex ]]; then
               sed -i '0, /version/s/version.*/version = "'$(echo $calculated_version)'"/' /app/Cargo.toml
+              echo "Updated Cargo.toml with new version value."
             #else
             #  echo "Invalid version, can't update version in Cargo.toml"
             #  exit 1
@@ -57,7 +58,8 @@ jobs:
             echo "=================="
             echo "Generate Changelog"
             echo "=================="
-            gib-entrypoint.sh changelog -p /app > CHANGELOG.md
+            gib changelog -p /app > CHANGELOG.md
+            echo "Updated CHANGELOG.md"
 
       - name: Commit Changes
         run: |

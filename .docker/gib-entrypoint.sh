@@ -11,4 +11,4 @@ if [ "$(id -u)" -ne "$(stat -c '%u' .)" ]; then
   eids="$(stat -c '--euid %u --egid %g' .)"
 fi
 
-exec ${eids:+setpriv --clear-groups $eids} gib $@
+exec ${eids:+setpriv --clear-groups $eids} real-gib $@

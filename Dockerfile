@@ -32,10 +32,11 @@ RUN \
     echo '[safe]' > /etc/gitconfig && \
     echo '    directory = *' /etc/gitconfig
 
-COPY --from=builder /usr/bin/gib /usr/bin/gib
-COPY --from=builder /build/.docker/gib-entrypoint.sh /usr/bin/gib-entrypoint.sh
+# Convience factor, let entrypoint script be an alias for gib to avoid privilege issues:
+COPY --from=builder /usr/bin/gib /usr/bin/real-gib
+COPY --from=builder /build/.docker/gib-entrypoint.sh /usr/bin/gib
 
 WORKDIR /app
 
-ENTRYPOINT ["gib-entrypoint.sh"]
+ENTRYPOINT ["gib"]
 CMD [ "--help" ]

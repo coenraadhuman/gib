@@ -56,7 +56,8 @@ pub struct Commit {
 
     pub message: Option<String>,
     pub author: Author,
-    pub committer: Committer
+    pub committer: Committer,
+    pub is_tagged: bool,
 
 }
 
@@ -96,6 +97,8 @@ pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
     return revwalk.map(|step| -> Commit {
         match step {
             Ok(oid) => {
+                let is_tagged = repo.find_tag(oid).is_ok();
+
                 match repo.find_commit(oid) {
                     Ok(commit) => {
                         let message = match commit.message() {
@@ -125,7 +128,7 @@ pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
                             },
                         };
 
-                        Commit { message, author, committer }
+                        Commit { message, author, committer, is_tagged }
                     },
                     Err(_) => panic!("Could not retrieve oid of commit"),
                 }
