@@ -1,9 +1,10 @@
 # Changelog
 
-## 1.7.0
+## 1.8.0
 
 |Version|Commit Type|Description|Breaking Change|Deprecation|Author|Committer|
 |---|---|---|---|---|---|---|
+|1.8.0|Feature|Release categories for changelog.| | |Coenraad Human <Coenraad Human>|Coenraad Human <Coenraad Human>|
 |1.7.0|Feature|Use gib entrypoint as alias for gib in container.| | |Coenraad Human <Coenraad Human>|Coenraad Human <Coenraad Human>|
 |1.6.0|CI|Use entrypoint sh instead of gib directly.| | |Coenraad Human <Coenraad Human>|Coenraad Human <Coenraad Human>|
 |1.6.0|Feature|Author and committer on changelog.| | |Coenraad Human <Coenraad Human>|Coenraad Human <Coenraad Human>|

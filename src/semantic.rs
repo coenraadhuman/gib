@@ -20,6 +20,14 @@ impl Version {
     pub fn format(&self) -> String {
         format!("{}.{}.{}", self.major, self.minor, self.patch)
     }
+
+    pub fn equal(&self, comparator: &Version) -> bool {
+        self.major == comparator.major && self.minor == comparator.minor && self.patch == comparator.patch
+    }
+
+    pub fn clone(&self) -> Version {
+        Version { major: self.major, minor: self.minor, patch: self.patch }
+    }
 }
 
 pub enum Impact {
@@ -29,7 +37,7 @@ pub enum Impact {
     NONE
 }
 
-pub fn add_commit_to_version(version: Version, optional_commit: Option<ConventionalCommit>, scope_filter: Option<String>) -> Version {
+pub fn add_commit_to_version(version: &Version, optional_commit: Option<ConventionalCommit>, scope_filter: Option<String>) -> Version {
     match optional_commit {
         Some(commit) => {
 
@@ -53,7 +61,7 @@ pub fn add_commit_to_version(version: Version, optional_commit: Option<Conventio
     }
 }
 
-pub fn add_impact_to_version(version: Version, impact: Impact) -> Version {
+pub fn add_impact_to_version(version: &Version, impact: Impact) -> Version {
     match impact {
         Impact::MAJOR => Version::new(version.major + 1, 0, 0),
         Impact::MINOR => Version::new(version.major, version.minor + 1, 0),

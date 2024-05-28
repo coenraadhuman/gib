@@ -19,7 +19,7 @@
                     "kind": "bin"
                 }
             },
-            "args": ["version"],
+            "args": ["changelog"],
             "cwd": "${workspaceFolder}"
         },
         {

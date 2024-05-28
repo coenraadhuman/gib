@@ -16,7 +16,7 @@ pub fn run(path: Option<String>, major:bool, minor: bool, patch: bool, commit_gi
     for commit in commits.iter().rev() {
         match commit.message {
             Some(ref message) => {
-                version = add_commit_to_version(version, create_conventional_commit(message), scope_filter.clone())
+                version = add_commit_to_version(&version, create_conventional_commit(message), scope_filter.clone())
             },
             None => {},
         }
@@ -24,21 +24,21 @@ pub fn run(path: Option<String>, major:bool, minor: bool, patch: bool, commit_gi
 
     match commit_git_hook {
         Some(message) => {
-            version = add_commit_to_version(version, create_conventional_commit(message.as_str()), scope_filter.clone())
+            version = add_commit_to_version(&version, create_conventional_commit(message.as_str()), scope_filter.clone())
         },
         None => {},
     }
 
     if major {
-        version = add_impact_to_version(version, Impact::MAJOR);
+        version = add_impact_to_version(&version, Impact::MAJOR);
     }
 
     if minor {
-        version = add_impact_to_version(version, Impact::MINOR);
+        version = add_impact_to_version(&version, Impact::MINOR);
     }
 
     if patch {
-        version = add_impact_to_version(version, Impact::PATCH);
+        version = add_impact_to_version(&version, Impact::PATCH);
     }
 
     version.print();

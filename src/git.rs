@@ -1,5 +1,4 @@
 use std::env;
-
 use git2::Repository;
 
 pub struct Author {
@@ -11,18 +10,18 @@ pub struct Author {
 
 impl Author {
 
-    pub fn to_string(&self) -> String {
+    pub fn to_changelog_string(&self) -> String {
         let name = match self.name {
             Some(ref value) => value,
             None => "Not Available",
         };
 
-        let email = match self.name {
+        let email = match self.email {
             Some(ref value) => value,
-            None => "not available",
+            None => return format!("{}", name),
         };
 
-        format!("{} <{}>", name, email)
+        format!("<a href=\"{}\">{}</a>", email, name)
     }
 
 }
@@ -36,18 +35,18 @@ pub struct Committer {
 
 impl Committer {
 
-    pub fn to_string(&self) -> String {
+    pub fn to_changelog_string(&self) -> String {
         let name = match self.name {
             Some(ref value) => value,
             None => "Not Available",
         };
 
-        let email = match self.name {
+        let email = match self.email {
             Some(ref value) => value,
-            None => "not available",
+            None => return format!("{}", name),
         };
 
-        format!("{} <{}>", name, email)
+        format!("<a href=\"{}\">{}</a>", email, name)
     }
 
 }
@@ -57,7 +56,6 @@ pub struct Commit {
     pub message: Option<String>,
     pub author: Author,
     pub committer: Committer,
-    pub is_tagged: bool,
 
 }
 
@@ -65,8 +63,15 @@ impl Commit {
 
 }
 
-pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
-    let found_path = match path {
+fn retrieve_git_repository(path: String) -> Repository {
+    match Repository::open(path) {
+        Ok(repository) => repository,
+        Err(_) => panic!("Couldn't open repository"),
+    }
+}
+
+fn determine_path(path: Option<String>) -> String {
+    match path {
         Some(path) => path,
         None => {
             match env::current_dir() {
@@ -77,12 +82,28 @@ pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
                 Err(_) => panic!("System can't find current directory"),
             }
         },
-    };
+    }
+}
 
-    let repo: Repository = match Repository::open(found_path) {
-        Ok(repository) => repository,
-        Err(_) => panic!("Couldn't open repository"),
-    };
+pub fn retrieve_tags(path: Option<String>) -> Vec<String> {
+    let found_path = determine_path(path);
+    let repo = retrieve_git_repository(found_path);
+
+    match repo.tag_names(None) {
+        Ok(found_tags) => {
+            found_tags
+            .into_iter()
+            .filter(|value| value.is_some())
+            .map(|value| value.unwrap().to_owned())
+            .collect()
+        },
+        Err(_) => Vec::new(),
+    }
+}
+
+pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
+    let found_path = determine_path(path);
+    let repo = retrieve_git_repository(found_path);
 
     let mut revwalk = match repo.revwalk() {
         Ok(found_revwalk) => found_revwalk,
@@ -97,8 +118,6 @@ pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
     return revwalk.map(|step| -> Commit {
         match step {
             Ok(oid) => {
-                let is_tagged = repo.find_tag(oid).is_ok();
-
                 match repo.find_commit(oid) {
                     Ok(commit) => {
                         let message = match commit.message() {
@@ -128,7 +147,7 @@ pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
                             },
                         };
 
-                        Commit { message, author, committer, is_tagged }
+                        Commit { message, author, committer }
                     },
                     Err(_) => panic!("Could not retrieve oid of commit"),
                 }
