@@ -17,6 +17,15 @@
       <td colspan="7"><em><strong>Unreleased</strong></em>
     </tr>
     <tr>
+      <td>1.10.2</td>
+      <td>Documentation</td>
+      <td>Readme badges and links.</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="coen.human@gmail.com">Coenraad Human</a></td>
+      <td><a href="noreply@github.com">GitHub</a></td>
+    </tr>
+    <tr>
       <td>1.10.1</td>
       <td>Documentation</td>
       <td>Readme and github actions example.</td>
