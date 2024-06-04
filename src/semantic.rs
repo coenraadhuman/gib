@@ -21,13 +21,6 @@ impl Version {
         format!("{}.{}.{}", self.major, self.minor, self.patch)
     }
 
-    pub fn equal(&self, comparator: &Version) -> bool {
-        self.major == comparator.major && self.minor == comparator.minor && self.patch == comparator.patch
-    }
-
-    pub fn clone(&self) -> Version {
-        Version { major: self.major, minor: self.minor, patch: self.patch }
-    }
 }
 
 pub enum Impact {
