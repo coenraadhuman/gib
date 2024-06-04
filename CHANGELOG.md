@@ -17,13 +17,25 @@
       <td colspan="7"><em><strong>Unreleased</strong></em>
     </tr>
     <tr>
+      <td>1.10.3</td>
+      <td>Fix</td>
+      <td>Ignore when commit is supplied via git hook.</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="coen.human@gmail.com">Coenraad Human</a></td>
+      <td><a href="coen.human@gmail.com">Coenraad Human</a></td>
+    </tr>
+    <tr>
+      <td colspan="7"><em><strong>Release: 1.10.2</strong></em></td>
+    </tr>
+    <tr>
       <td>1.10.2</td>
       <td>Documentation</td>
       <td>Readme badges and links.</td>
       <td> </td>
       <td> </td>
       <td><a href="coen.human@gmail.com">Coenraad Human</a></td>
-      <td><a href="noreply@github.com">GitHub</a></td>
+      <td><a href="coen.human@gmail.com">Coenraad Human</a></td>
     </tr>
     <tr>
       <td>1.10.1</td>

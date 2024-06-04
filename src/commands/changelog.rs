@@ -87,7 +87,7 @@ pub fn run(path: Option<String>, commit_git_hook: Option<String>, scope_filter: 
                 None => {},
             }
         },
-        None => todo!(),
+        None => {},
     }
 
     if unreleased_count != 0 {
