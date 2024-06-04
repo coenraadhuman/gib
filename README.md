@@ -7,7 +7,9 @@ Gibberish git history analyser, a terminal utility that uses [conventional commi
 
 ### Goal
 
-The aim of the utility is to provide tools for pipelines to facilitate [semantic versioning](https://semver.org/) calculation, changelog generation for a project in an automated fashion using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+The aim of the utility is to provide tools for pipelines or locally to facilitate [semantic version](https://semver.org/) calculation, changelog generation for a project in an automated fashion using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) on the checked out branch of a git repository.
+
+_Note: be aware that `gib` always uses the commmits of the checked out branch, hence shallow pulls can affect the outcome of the results._
 
 ### Getting Started
 
@@ -33,7 +35,7 @@ Usage: gib <COMMAND>
 
 Commands:
   version    Command to calculate the semantic version based on the conventional commits of the current branch
-  changelog  Command to generate a changelog markdown file based on the conventional commmits and tags of the current branch
+  changelog  Command to generate a simple changelog markdown file based on the conventional commmits and tags of the current branch
   help       Print this message or the help of the given subcommand(s)
 
 Options:
@@ -58,9 +60,9 @@ Options:
       --patch
           Bump current project version with a patch increment
   -c, --commit-git-hook <COMMIT MESSAGE>
-          Mechanism to provide the latest commit made to be included in project version calculation
+          Mechanism to provide the latest commit made to be included in project version calculation, this takes precedence when used inconjunction with either major, minor or patch flags
   -s, --scope-filter <SCOPE_REGEX_FILTER>
-          Scope Regex filter; provide mechanism for calculating the version of a project withing a monorepo based of a regular expression
+          Scope regex filter; provide mechanism for calculating the version of a project within a monorepo based of a regular expression
   -h, --help
           Print help
 ```
@@ -96,19 +98,23 @@ Some notes regarding using `gib` with docker:
 - [Dockerhub](https://hub.docker.com/repository/docker/coenraadhuman/gib/general) - `docker pull coenraadhuman/gib:latest`
 - [Github Packages](https://github.com/coenraadhuman/gib/pkgs/container/gib) - `docker pull ghcr.io/coenraadhuman/gib:latest`
 
-By default the work directory is set to `/app` this can be changed with the `-w` option on `docker run`. It is important to update this when mounting to a different directory since the entry point for the container relies on the working directory to ensure bash and gib runs with the correct Linux permissions.
+By default the work directory is set to `/app` this can be changed with the `-w` option on `docker run` to be the path of the mounted repository. _It is important to update this when mounting to a different directory since the entry point for the container relies on the working directory to ensure gib runs with the correct Linux permissions._
 
-Run Example:
+Run Version Example:
 ```bash
 # The default work directory is /app
 $ docker run -v $PWD:/app ghcr.io/coenraadhuman/gib:latest version
 $ 0.10.1
 ```
 
+Run Changelog Example (redirect standard output to file that can be stored):
 ```bash
 # The default work directory is /app
 $ docker run -v $PWD:/app ghcr.io/coenraadhuman/gib:latest changelog > CHANGELOG.md
 ```
+
+#### Pipeline Examples:
+- [Github Actions](./.docs/github-pipeline-example.md)
 
 ### Further Reading
 

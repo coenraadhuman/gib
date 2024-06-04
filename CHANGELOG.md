@@ -17,6 +17,15 @@
       <td colspan="7"><em><strong>Unreleased</strong></em>
     </tr>
     <tr>
+      <td>1.10.1</td>
+      <td>Documentation</td>
+      <td>Readme and github actions example.</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="coen.human@gmail.com">Coenraad Human</a></td>
+      <td><a href="coen.human@gmail.com">Coenraad Human</a></td>
+    </tr>
+    <tr>
       <td>1.10.0</td>
       <td>Feature</td>
       <td>Commit git hook option functionality on changelog.</td>
