@@ -7,7 +7,7 @@ use crate::semantic::{add_commit_to_version, Version};
 
 // Todo: find a nice template engine for Rust to create the changelog document:
 // Todo: use map for tag associated with commits on current branch:
-pub fn run(path: Option<String>, _commit_git_hook: Option<String>, scope_filter: Option<String>) {
+pub fn run(path: Option<String>, commit_git_hook: Option<String>, scope_filter: Option<String>) {
     let commits = retrieve_branch_commits(path.clone());
     let optional_oid_commit_tag_map = retrieve_commit_tag_map(path);
 
@@ -61,6 +61,33 @@ pub fn run(path: Option<String>, _commit_git_hook: Option<String>, scope_filter:
             },
             None => {},
         }
+    }
+
+    match commit_git_hook {
+        Some(ref user_commit) => {
+            match create_conventional_commit(user_commit) {
+                Some(user_conventional_commit) => {
+                    version = add_commit_to_version(&version, create_conventional_commit(user_commit), scope_filter.clone());
+
+                    // Add commit to log:
+                    simple_changelog.insert_str(0, "    </tr>\n");
+                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", "Unknown"));
+                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", "Unknown"));
+                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", if user_conventional_commit.is_deprecrated { 'X' } else { ' ' }));
+                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", if user_conventional_commit.is_breaking { 'X' } else { ' ' }));
+                    simple_changelog.insert_str(0, &format!("      <td>{}.</td>\n", user_conventional_commit.commit_description.to_sentence_case()));
+                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", user_conventional_commit.commit_type));
+                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", version.format()));
+                    simple_changelog.insert_str(0, "    <tr>\n");
+
+                    // Will always be unreleased:
+                    unreleased_count = unreleased_count + 1;
+                },
+                // Commit invalid ignore:
+                None => {},
+            }
+        },
+        None => todo!(),
     }
 
     if unreleased_count != 0 {
