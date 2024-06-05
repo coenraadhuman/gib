@@ -22,7 +22,7 @@ impl Author {
             None => return format!("{}", name),
         };
 
-        format!("<a href=\"{}\">{}</a>", email, name)
+        format!("<a href=\"mailto:{}\">{}</a>", email, name)
     }
 
 }
@@ -47,7 +47,7 @@ impl Committer {
             None => return format!("{}", name),
         };
 
-        format!("<a href=\"{}\">{}</a>", email, name)
+        format!("<a href=\"mailto:{}\">{}</a>", email, name)
     }
 
 }

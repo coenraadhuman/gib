@@ -20,7 +20,7 @@ FROM alpine:3.19
 RUN \
     apk update && \
     apk upgrade && \
-    apk add --no-cache bash sed shadow setpriv && \
+    apk add --no-cache bash sed shadow setpriv git && \
     rm /var/cache/apk/* && \
     # Preferred shell on pipelines:
     chsh -s $(which bash) && \
