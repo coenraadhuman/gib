@@ -17,6 +17,15 @@
       <td colspan="7"><em><strong>Unreleased</strong></em>
     </tr>
     <tr>
+      <td>1.10.5</td>
+      <td>Documentation</td>
+      <td>Readme docker.</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="coenraad.human@proton.me">Coenraad Human</a></td>
+      <td><a href="coenraad.human@proton.me">Coenraad Human</a></td>
+    </tr>
+    <tr>
       <td>1.10.4</td>
       <td>Fix</td>
       <td>Add missing mailto uri to changelog.</td>

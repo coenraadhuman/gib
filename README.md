@@ -98,16 +98,26 @@ Some notes regarding using `gib` with docker:
 - [Dockerhub](https://hub.docker.com/repository/docker/coenraadhuman/gib/general) - `docker pull coenraadhuman/gib:latest`
 - [Github Packages](https://github.com/coenraadhuman/gib/pkgs/container/gib) - `docker pull ghcr.io/coenraadhuman/gib:latest`
 
+#### Image Additionals
+The below were added to the image for convience on pipeline usage:
+- bash
+- sed
+- git
+
+#### Important - Work Directory
+
 By default the work directory is set to `/app` this can be changed with the `-w` option on `docker run` to be the path of the mounted repository. _It is important to update this when mounting to a different directory since the entry point for the container relies on the working directory to ensure gib runs with the correct Linux permissions._
 
-Run Version Example:
+#### Docker Run Examples
+
+Run Version:
 ```bash
 # The default work directory is /app
 $ docker run -v $PWD:/app ghcr.io/coenraadhuman/gib:latest version
 $ 0.10.1
 ```
 
-Run Changelog Example (redirect standard output to file that can be stored):
+Run Changelog (redirect standard output to file that can be stored):
 ```bash
 # The default work directory is /app
 $ docker run -v $PWD:/app ghcr.io/coenraadhuman/gib:latest changelog > CHANGELOG.md
