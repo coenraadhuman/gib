@@ -11,7 +11,7 @@ env:
   RUST_BACKTRACE: 1
 
 jobs:
-  test:
+  build:
     name: ${{ matrix.platform.os_name }} with Rust ${{ matrix.toolchain }} on target ${{ matrix.platform.target }}
     runs-on: ${{ matrix.platform.os }}
     strategy:
@@ -174,10 +174,19 @@ jobs:
         with:
           key: "v2"
 
-      - name: Configure Git
-        run: |
-          git config --global user.email "jdoe@example.com"
-          git config --global user.name "J. Doe"
+      - name: Generate New Release Ghangelog
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/coenraadhuman/gib:latest
+          shell: /bin/bash
+          options: -v ${{ github.workspace }}:/app
+          run : |
+            echo "=================="
+            echo "Generate Changelog"
+            echo "=================="
+            gib changelog -p /app > RELEASE_CHANGELOG.md
+            echo "Updated CHANGELOG.md"
+
 
       - name: Install musl-tools on Linux
         run: sudo apt-get update --yes && sudo apt-get install --yes musl-tools
@@ -234,4 +243,4 @@ jobs:
         with:
           draft: true
           files: "gib*"
-          body_path: CHANGELOG.md
+          body_path: RELEASE_CHANGELOG.md

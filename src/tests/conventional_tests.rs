@@ -1,16 +1,17 @@
 #[cfg(test)]
-
 use crate::conventional::{create_conventional_commit, Type};
 
 #[test]
 fn feat_with_scope_and_breaking() {
-    let result = create_conventional_commit(r"feat(foo)!: add a nice RegEx to check and parse a commit message that folows https://www.conventionalcommits.org/en/v1.0.0");
+    let result = create_conventional_commit(
+        r"feat(foo)!: add a nice RegEx to check and parse a commit message that folows https://www.conventionalcommits.org/en/v1.0.0",
+    );
 
     assert_eq!(result.is_some(), true);
 
     let unwrapped_result = result.unwrap();
 
-    assert_eq!(unwrapped_result.commit_type, Type::FEATURE);
+    assert_eq!(unwrapped_result.commit_type, Type::Feature);
 
     assert_eq!(unwrapped_result.scope.is_some(), true);
 
@@ -31,7 +32,8 @@ fn feat_with_scope_and_breaking() {
 
 #[test]
 fn feat_with_scope_body_and_breaking() {
-    let result = create_conventional_commit(r"feat(sdf): add a nice RegEx to check and parse a commit message that folows https://www.conventionalcommits.org/en/v1.0.0
+    let result = create_conventional_commit(
+        r"feat(sdf): add a nice RegEx to check and parse a commit message that folows https://www.conventionalcommits.org/en/v1.0.0
 
 Hello,
 
@@ -46,13 +48,14 @@ Example: foo
 Refs: #42
 DEPRECATED
 BREAKING-CHANGE: Brakes wood
-something #mentions a commit");
+something #mentions a commit",
+    );
 
     assert_eq!(result.is_some(), true);
 
     let unwrapped_result = result.unwrap();
 
-    assert_eq!(unwrapped_result.commit_type, Type::FEATURE);
+    assert_eq!(unwrapped_result.commit_type, Type::Feature);
 
     assert_eq!(unwrapped_result.scope.is_some(), true);
 
@@ -80,10 +83,9 @@ fn simple_chore() {
 
     let unwrapped_result = result.unwrap();
 
-    assert_eq!(unwrapped_result.commit_type, Type::CHORE);
+    assert_eq!(unwrapped_result.commit_type, Type::Chore);
 
     assert_eq!(unwrapped_result.scope.is_some(), false);
-
 
     assert_eq!(unwrapped_result.is_breaking, false);
 
@@ -104,7 +106,7 @@ fn simple_refactor() {
 
     let unwrapped_result = result.unwrap();
 
-    assert_eq!(unwrapped_result.commit_type, Type::REFACTOR);
+    assert_eq!(unwrapped_result.commit_type, Type::Refactor);
 
     assert_eq!(unwrapped_result.scope.is_some(), false);
 

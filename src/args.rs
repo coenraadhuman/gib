@@ -50,5 +50,9 @@ pub enum Commands {
         /// Scope regex filter; provide mechanism for generating a changelog for a specific project within a monorepo based of a regular expression
         #[arg(short, long, value_name = "SCOPE_REGEX_FILTER")]
         scope_filter: Option<String>,
+
+        /// Specify whether changelog generated is for latest tag
+        #[arg(short, long)]
+        release: bool
     }
 }

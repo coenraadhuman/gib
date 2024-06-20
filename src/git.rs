@@ -1,16 +1,13 @@
-use std::env;
 use git2::Repository;
 use indexmap::IndexMap;
+use std::env;
 
 pub struct Author {
-
     pub name: Option<String>,
-    pub email: Option<String>
-
+    pub email: Option<String>,
 }
 
 impl Author {
-
     pub fn to_changelog_string(&self) -> String {
         let name = match self.name {
             Some(ref value) => value,
@@ -19,23 +16,19 @@ impl Author {
 
         let email = match self.email {
             Some(ref value) => value,
-            None => return format!("{}", name),
+            None => return name.to_string(),
         };
 
         format!("<a href=\"mailto:{}\">{}</a>", email, name)
     }
-
 }
 
 pub struct Committer {
-
     pub name: Option<String>,
-    pub email: Option<String>
-
+    pub email: Option<String>,
 }
 
 impl Committer {
-
     pub fn to_changelog_string(&self) -> String {
         let name = match self.name {
             Some(ref value) => value,
@@ -44,26 +37,21 @@ impl Committer {
 
         let email = match self.email {
             Some(ref value) => value,
-            None => return format!("{}", name),
+            None => return name.to_string(),
         };
 
         format!("<a href=\"mailto:{}\">{}</a>", email, name)
     }
-
 }
 
 pub struct Commit {
-
     pub message: Option<String>,
     pub author: Author,
     pub committer: Committer,
-    pub oid: String
-
+    pub oid: String,
 }
 
-impl Commit {
-
-}
+impl Commit {}
 
 fn retrieve_git_repository(path: String) -> Repository {
     match Repository::open(path) {
@@ -75,14 +63,12 @@ fn retrieve_git_repository(path: String) -> Repository {
 fn determine_path(path: Option<String>) -> String {
     match path {
         Some(path) => path,
-        None => {
-            match env::current_dir() {
-                Ok(path) => match path.into_os_string().into_string() {
-                    Ok(auto_path) => auto_path,
-                    Err(_) => panic!("Couldn't determine current directory for repository"),
-                },
-                Err(_) => panic!("System can't find current directory"),
-            }
+        None => match env::current_dir() {
+            Ok(path) => match path.into_os_string().into_string() {
+                Ok(auto_path) => auto_path,
+                Err(_) => panic!("Couldn't determine current directory for repository"),
+            },
+            Err(_) => panic!("System can't find current directory"),
         },
     }
 }
@@ -103,7 +89,7 @@ pub fn retrieve_commit_tag_map(path: Option<String>) -> Option<IndexMap<String, 
         Err(_) => panic!("Could not retrieve tag names"),
     };
 
-    if tag_names.len() == 0 {
+    if tag_names.is_empty() {
         return None;
     }
 
@@ -120,20 +106,23 @@ pub fn retrieve_commit_tag_map(path: Option<String>) -> Option<IndexMap<String, 
 
         // If it is not commit, it might be a tag, ignore git tree and blobs:
         } else if let Some(tag) = git_object.as_tag() {
-
             // Find commit for tag object:
-            if let Some(commit) = tag.target().ok().and_then(|target| target.into_commit().ok()) {
+            if let Some(commit) = tag
+                .target()
+                .ok()
+                .and_then(|target| target.into_commit().ok())
+            {
                 tags.push((commit, name));
             }
         }
     }
 
-    return Some(tags
-        .into_iter()
-        .map(|(commit, tag)| (commit.id().to_string(), tag))
-        .collect());
+    Some(
+        tags.into_iter()
+            .map(|(commit, tag)| (commit.id().to_string(), tag))
+            .collect(),
+    )
 }
-
 
 pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
     let found_path = determine_path(path);
@@ -145,48 +134,38 @@ pub fn retrieve_branch_commits(path: Option<String>) -> Vec<Commit> {
     };
 
     match revwalk.push_head() {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(_) => panic!("Couldn't push head"),
     };
 
-    return revwalk.map(|step| -> Commit {
-        match step {
-            Ok(oid) => {
-                match repo.find_commit(oid) {
+    return revwalk
+        .map(|step| -> Commit {
+            match step {
+                Ok(oid) => match repo.find_commit(oid) {
                     Ok(commit) => {
-                        let message = match commit.message() {
-                            Some(value) => Option::Some(value.to_string()),
-                            None => Option::None,
-                        };
+                        let message = commit.message().map(|value| value.to_string());
 
                         let author = Author {
-                            name: match commit.author().name() {
-                                Some(value) => Some(value.to_string()),
-                                None => None,
-                            },
-                            email: match commit.author().email() {
-                                Some(value) => Some(value.to_string()),
-                                None => None,
-                            },
+                            name: commit.author().name().map(|value| value.to_string()),
+                            email: commit.author().email().map(|value| value.to_string()),
                         };
 
                         let committer = Committer {
-                            name: match commit.committer().name() {
-                                Some(value) => Some(value.to_string()),
-                                None => None,
-                            },
-                            email: match commit.committer().email() {
-                                Some(value) => Some(value.to_string()),
-                                None => None,
-                            },
+                            name: commit.author().name().map(|value| value.to_string()),
+                            email: commit.author().email().map(|value| value.to_string()),
                         };
 
-                        Commit { message, author, committer, oid: oid.to_string() }
-                    },
+                        Commit {
+                            message,
+                            author,
+                            committer,
+                            oid: oid.to_string(),
+                        }
+                    }
                     Err(_) => panic!("Could not retrieve oid of commit"),
-                }
-            },
-            Err(_) => panic!("Could not retrieve commit from oid"),
-        }
-    }).collect();
+                },
+                Err(_) => panic!("Could not retrieve commit from oid"),
+            }
+        })
+        .collect();
 }

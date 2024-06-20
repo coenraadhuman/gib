@@ -4,7 +4,6 @@ use fancy_regex::Regex;
 use lazy_static::lazy_static;
 
 pub struct ConventionalCommit {
-
     pub commit_type: Type,
     pub commit_description: String,
     pub scope: Option<String>,
@@ -13,11 +12,9 @@ pub struct ConventionalCommit {
     pub is_deprecrated: bool,
     pub commit_body: Option<String>,
     pub commit_footer: Option<String>,
-
 }
 
 impl ConventionalCommit {
-
     pub fn new(
         commit_type: Type,
         commit_description: String,
@@ -26,7 +23,7 @@ impl ConventionalCommit {
         is_breaking: bool,
         is_deprecrated: bool,
         commit_body: Option<String>,
-        commit_footer: Option<String>
+        commit_footer: Option<String>,
     ) -> ConventionalCommit {
         ConventionalCommit {
             commit_type,
@@ -36,43 +33,40 @@ impl ConventionalCommit {
             is_breaking,
             is_deprecrated,
             commit_body,
-            commit_footer
+            commit_footer,
         }
     }
-
 }
 
-#[derive(Debug)]
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub enum Type {
-    FEATURE,
-    REFACTOR,
-    PERFORMANCE,
-    FIX,
-    CHORE,
-    REVERT,
-    DOCS,
-    STYLE,
-    TEST,
-    BUILD,
-    CI
+    Feature,
+    Refactor,
+    Performance,
+    Fix,
+    Chore,
+    Revert,
+    Docs,
+    Style,
+    Test,
+    Build,
+    Ci,
 }
 
 impl FromStr for Type {
-
     fn from_str(input: &str) -> Result<Type, Self::Err> {
         match input {
-            "feat" => Ok(Type::FEATURE),
-            "refactor" => Ok(Type::REFACTOR),
-            "perf" => Ok(Type::PERFORMANCE),
-            "fix" => Ok(Type::FIX),
-            "chore" => Ok(Type::CHORE),
-            "revert" => Ok(Type::REVERT),
-            "docs" => Ok(Type::DOCS),
-            "style" => Ok(Type::STYLE),
-            "test" => Ok(Type::TEST),
-            "build" => Ok(Type::BUILD),
-            "ci" => Ok(Type::CI),
+            "feat" => Ok(Type::Feature),
+            "refactor" => Ok(Type::Refactor),
+            "perf" => Ok(Type::Performance),
+            "fix" => Ok(Type::Fix),
+            "chore" => Ok(Type::Chore),
+            "revert" => Ok(Type::Revert),
+            "docs" => Ok(Type::Docs),
+            "style" => Ok(Type::Style),
+            "test" => Ok(Type::Test),
+            "build" => Ok(Type::Build),
+            "ci" => Ok(Type::Ci),
             _ => Err(()),
         }
     }
@@ -81,48 +75,39 @@ impl FromStr for Type {
 }
 
 impl Display for Type {
-
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Type::FEATURE=> write!(f, "Feature"),
-            Type::REFACTOR=> write!(f, "Refactor"),
-            Type::PERFORMANCE=> write!(f, "Performance"),
-            Type::FIX=> write!(f, "Fix"),
-            Type::CHORE=> write!(f, "Chore"),
-            Type::REVERT=> write!(f, "Revert"),
-            Type::DOCS=> write!(f, "Documentation"),
-            Type::STYLE=> write!(f, "Styling"),
-            Type::TEST=> write!(f, "Testing"),
-            Type::BUILD=> write!(f, "Builds"),
-            Type::CI=> write!(f, "CI"),
+            Type::Feature => write!(f, "Feature"),
+            Type::Refactor => write!(f, "Refactor"),
+            Type::Performance => write!(f, "Performance"),
+            Type::Fix => write!(f, "Fix"),
+            Type::Chore => write!(f, "Chore"),
+            Type::Revert => write!(f, "Revert"),
+            Type::Docs => write!(f, "Documentation"),
+            Type::Style => write!(f, "Styling"),
+            Type::Test => write!(f, "Testing"),
+            Type::Build => write!(f, "Builds"),
+            Type::Ci => write!(f, "CI"),
         }
     }
-
 }
 
 pub fn scope_filter_check(scope_regex: Option<String>, scope_value: Option<String>) -> bool {
     match scope_regex {
-         // If supplied it needs to match to include commit in calculation;
-        Some(ref found_scope_regex) => {
-
-            match Regex::new(found_scope_regex) {
-                Ok(scope_filter_regex) => {
-                    match scope_value {
-                        Some(value) => scope_filter_regex.is_match(&value).unwrap(),
-                        None => false,
-                    }
-                },
-                Err(_) => panic!("Invalid regex supplied on scope filter"),
-            }
-
+        // If supplied it needs to match to include commit in calculation;
+        Some(ref found_scope_regex) => match Regex::new(found_scope_regex) {
+            Ok(scope_filter_regex) => match scope_value {
+                Some(value) => scope_filter_regex.is_match(&value).unwrap(),
+                None => false,
+            },
+            Err(_) => panic!("Invalid regex supplied on scope filter"),
         },
         None => {
             // If scope regex is not supplied then include commit in calculation:
             true
-        },
+        }
     }
- }
-
+}
 
 pub fn create_conventional_commit(commit: &str) -> Option<ConventionalCommit> {
     lazy_static! {
@@ -130,57 +115,59 @@ pub fn create_conventional_commit(commit: &str) -> Option<ConventionalCommit> {
     }
 
     if CONVENTIONAL_COMMIT_REGEX.is_match(commit).unwrap() {
-
         match CONVENTIONAL_COMMIT_REGEX.captures(commit) {
-            Ok(optinionl_captures) => {
+            Ok(optinionl_captures) => match optinionl_captures {
+                Some(captures) => {
+                    let commit_type = captures.name("type")?.as_str();
+                    let commit_scope = captures.name("scope");
+                    let commit_breaking = captures.name("breaking");
+                    let commit_description = captures.name("description")?.as_str().trim();
+                    let commit_body = captures.name("body");
+                    let commit_footer = captures.name("footers");
 
-                match optinionl_captures {
-                    Some(captures) => {
-                        let commit_type = captures.name("type")?.as_str();
-                        let commit_scope = captures.name("scope");
-                        let commit_breaking = captures.name("breaking");
-                        let commit_description = captures.name("description")?.as_str().trim();
-                        let commit_body = captures.name("body");
-                        let commit_footer = captures.name("footers");
-
-                        let is_breaking = match commit_breaking { 
-                            Some(_) => true,
-                            None => match commit_body {
-                                Some(value) => value.as_str().contains("BREAKING_CHANGE") || value.as_str().contains("BREAKING-CHANGE") || value.as_str().contains("BREAKING CHANGE"),
-                                None => match commit_footer {
-                                    Some(value) => value.as_str().contains("BREAKING_CHANGE") || value.as_str().contains("BREAKING-CHANGE") || value.as_str().contains("BREAKING CHANGE"),
-                                    None => false,
-                                },
+                    let is_breaking = match commit_breaking {
+                        Some(_) => true,
+                        None => match commit_body {
+                            Some(value) => {
+                                value.as_str().contains("BREAKING_CHANGE")
+                                    || value.as_str().contains("BREAKING-CHANGE")
+                                    || value.as_str().contains("BREAKING CHANGE")
                             }
-                        };
-
-                        let is_deprecated = match commit_body {
-                            Some(value) => value.as_str().contains("DEPRECATED"),
                             None => match commit_footer {
-                                Some(value) => value.as_str().contains("DEPRECATED"),
+                                Some(value) => {
+                                    value.as_str().contains("BREAKING_CHANGE")
+                                        || value.as_str().contains("BREAKING-CHANGE")
+                                        || value.as_str().contains("BREAKING CHANGE")
+                                }
                                 None => false,
                             },
-                        };
+                        },
+                    };
 
-                        return Some(ConventionalCommit::new(
-                            Type::from_str(commit_type).unwrap(),
-                            commit_description.to_owned(),
-                            match commit_scope { Some(value) => Some(value.as_str().to_owned()), None => None },
-                            commit.to_owned(),
-                            is_breaking,
-                            is_deprecated,
-                            match commit_body { Some(value) => Some(value.as_str().to_owned()), None => None },
-                            match commit_footer { Some(value) => Some(value.as_str().to_owned()), None => None }
-                        ));
-                    },
-                    None => panic!("Could not retrieve regex captures for valid commit"),
+                    let is_deprecated = match commit_body {
+                        Some(value) => value.as_str().contains("DEPRECATED"),
+                        None => match commit_footer {
+                            Some(value) => value.as_str().contains("DEPRECATED"),
+                            None => false,
+                        },
+                    };
+
+                    return Some(ConventionalCommit::new(
+                        Type::from_str(commit_type).unwrap(),
+                        commit_description.to_owned(),
+                        commit_scope.map(|value| value.as_str().to_owned()),
+                        commit.to_owned(),
+                        is_breaking,
+                        is_deprecated,
+                        commit_body.map(|value| value.as_str().to_owned()),
+                        commit_footer.map(|value| value.as_str().to_owned()),
+                    ));
                 }
-
+                None => panic!("Could not retrieve regex captures for valid commit"),
             },
             Err(_) => panic!("Could not retrieve regex captures for valid commit"),
         }
-
     }
 
-    return Option::None;
+    Option::None
 }

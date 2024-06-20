@@ -7,7 +7,12 @@ use crate::semantic::{add_commit_to_version, Version};
 
 // Todo: find a nice template engine for Rust to create the changelog document:
 // Todo: use map for tag associated with commits on current branch:
-pub fn run(path: Option<String>, commit_git_hook: Option<String>, scope_filter: Option<String>) {
+pub fn run(
+    path: Option<String>,
+    commit_git_hook: Option<String>,
+    scope_filter: Option<String>,
+    _release: bool,
+) {
     let commits = retrieve_branch_commits(path.clone());
     let optional_oid_commit_tag_map = retrieve_commit_tag_map(path);
 
@@ -19,80 +24,148 @@ pub fn run(path: Option<String>, commit_git_hook: Option<String>, scope_filter: 
     simple_changelog.insert_str(0, "  </tbody>\n");
 
     for commit in commits.iter().rev() {
-        match commit.message {
-            Some(ref message) => {
-                version = add_commit_to_version(&version, create_conventional_commit(message), scope_filter.clone());
+        if let Some(ref message) = commit.message {
+            version = add_commit_to_version(
+                &version,
+                create_conventional_commit(message),
+                scope_filter.clone(),
+            );
 
-                match create_conventional_commit(message) {
-                    Some(conventional_commit) => {
-                        if scope_filter_check(scope_filter.clone(), conventional_commit.scope) {
-                            // Add commit to log:
-                            simple_changelog.insert_str(0, "    </tr>\n");
-                            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", commit.committer.to_changelog_string()));
-                            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", commit.author.to_changelog_string()));
-                            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", if conventional_commit.is_deprecrated { 'X' } else { ' ' }));
-                            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", if conventional_commit.is_breaking { 'X' } else { ' ' }));
-                            simple_changelog.insert_str(0, &format!("      <td>{}.</td>\n", conventional_commit.commit_description.to_sentence_case()));
-                            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", conventional_commit.commit_type));
-                            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", version.format()));
-                            simple_changelog.insert_str(0, "    <tr>\n");
+            if let Some(conventional_commit) = create_conventional_commit(message) {
+                if scope_filter_check(scope_filter.clone(), conventional_commit.scope) {
+                    // Add commit to log:
+                    simple_changelog.insert_str(0, "    </tr>\n");
+                    simple_changelog.insert_str(
+                        0,
+                        &format!(
+                            "      <td>{}</td>\n",
+                            commit.committer.to_changelog_string()
+                        ),
+                    );
+                    simple_changelog.insert_str(
+                        0,
+                        &format!("      <td>{}</td>\n", commit.author.to_changelog_string()),
+                    );
+                    simple_changelog.insert_str(
+                        0,
+                        &format!(
+                            "      <td>{}</td>\n",
+                            if conventional_commit.is_deprecrated {
+                                'X'
+                            } else {
+                                ' '
+                            }
+                        ),
+                    );
+                    simple_changelog.insert_str(
+                        0,
+                        &format!(
+                            "      <td>{}</td>\n",
+                            if conventional_commit.is_breaking {
+                                'X'
+                            } else {
+                                ' '
+                            }
+                        ),
+                    );
+                    simple_changelog.insert_str(
+                        0,
+                        &format!(
+                            "      <td>{}.</td>\n",
+                            conventional_commit.commit_description.to_sentence_case()
+                        ),
+                    );
+                    simple_changelog.insert_str(
+                        0,
+                        &format!("      <td>{}</td>\n", conventional_commit.commit_type),
+                    );
+                    simple_changelog
+                        .insert_str(0, &format!("      <td>{}</td>\n", version.format()));
+                    simple_changelog.insert_str(0, "    <tr>\n");
 
-                            match optional_oid_commit_tag_map {
-                                Some(ref map) => {
-                                    // Add release entry to log:
-                                    match map.get(&commit.oid) {
-                                        Some(found_tag) => {
-                                            simple_changelog.insert_str(0, "    </tr>\n");
-                                            simple_changelog.insert_str(0, &format!("      <td colspan=\"7\"><em><strong>Release: {}</strong></em></td>\n", found_tag));
-                                            simple_changelog.insert_str(0, "    <tr>\n");
-                                            unreleased_count = 0;
-                                        },
-                                        // No release associated with commit, add to counter to determine no release header:
-                                        None => unreleased_count = unreleased_count + 1,
-                                    }
-                                },
+                    match optional_oid_commit_tag_map {
+                        Some(ref map) => {
+                            // Add release entry to log:
+                            match map.get(&commit.oid) {
+                                Some(found_tag) => {
+                                    simple_changelog.insert_str(0, "    </tr>\n");
+                                    simple_changelog.insert_str(0, &format!("      <td colspan=\"7\"><em><strong>Release: {}</strong></em></td>\n", found_tag));
+                                    simple_changelog.insert_str(0, "    <tr>\n");
+                                    unreleased_count = 0;
+                                }
                                 // No release associated with commit, add to counter to determine no release header:
-                                None => unreleased_count = unreleased_count + 1,
-                            };
+                                None => unreleased_count += 1,
+                            }
                         }
-                    },
-                    None => {},
+                        // No release associated with commit, add to counter to determine no release header:
+                        None => unreleased_count += 1,
+                    };
                 }
-            },
-            None => {},
+            }
         }
     }
 
-    match commit_git_hook {
-        Some(ref user_commit) => {
-            match create_conventional_commit(user_commit) {
-                Some(user_conventional_commit) => {
-                    version = add_commit_to_version(&version, create_conventional_commit(user_commit), scope_filter.clone());
+    if let Some(ref user_commit) = commit_git_hook {
+        if let Some(user_conventional_commit) = create_conventional_commit(user_commit) {
+            version = add_commit_to_version(
+                &version,
+                create_conventional_commit(user_commit),
+                scope_filter.clone(),
+            );
 
-                    // Add commit to log:
-                    simple_changelog.insert_str(0, "    </tr>\n");
-                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", "Unknown"));
-                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", "Unknown"));
-                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", if user_conventional_commit.is_deprecrated { 'X' } else { ' ' }));
-                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", if user_conventional_commit.is_breaking { 'X' } else { ' ' }));
-                    simple_changelog.insert_str(0, &format!("      <td>{}.</td>\n", user_conventional_commit.commit_description.to_sentence_case()));
-                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", user_conventional_commit.commit_type));
-                    simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", version.format()));
-                    simple_changelog.insert_str(0, "    <tr>\n");
+            // Add commit to log:
+            simple_changelog.insert_str(0, "    </tr>\n");
+            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", "Unknown"));
+            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", "Unknown"));
+            simple_changelog.insert_str(
+                0,
+                &format!(
+                    "      <td>{}</td>\n",
+                    if user_conventional_commit.is_deprecrated {
+                        'X'
+                    } else {
+                        ' '
+                    }
+                ),
+            );
+            simple_changelog.insert_str(
+                0,
+                &format!(
+                    "      <td>{}</td>\n",
+                    if user_conventional_commit.is_breaking {
+                        'X'
+                    } else {
+                        ' '
+                    }
+                ),
+            );
+            simple_changelog.insert_str(
+                0,
+                &format!(
+                    "      <td>{}.</td>\n",
+                    user_conventional_commit
+                        .commit_description
+                        .to_sentence_case()
+                ),
+            );
+            simple_changelog.insert_str(
+                0,
+                &format!("      <td>{}</td>\n", user_conventional_commit.commit_type),
+            );
+            simple_changelog.insert_str(0, &format!("      <td>{}</td>\n", version.format()));
+            simple_changelog.insert_str(0, "    <tr>\n");
 
-                    // Will always be unreleased:
-                    unreleased_count = unreleased_count + 1;
-                },
-                // Commit invalid ignore:
-                None => {},
-            }
-        },
-        None => {},
+            // Will always be unreleased:
+            unreleased_count += 1;
+        }
     }
 
     if unreleased_count != 0 {
         simple_changelog.insert_str(0, "    </tr>\n");
-        simple_changelog.insert_str(0, "      <td colspan=\"7\"><em><strong>Unreleased</strong></em>\n");
+        simple_changelog.insert_str(
+            0,
+            "      <td colspan=\"7\"><em><strong>Unreleased</strong></em>\n",
+        );
         simple_changelog.insert_str(0, "    <tr>\n");
     }
 
